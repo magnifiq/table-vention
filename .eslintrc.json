@@ -1,0 +1,122 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "semi": ["error", "always"],
+    "indent": "off",
+
+    "import/prefer-default-export": "off",
+    "linebreak-style": 0,
+    "max-len": [
+      2,
+      120,
+      {
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreComments": true
+      }
+    ],
+    "react/sort-comp": [
+      2,
+      {
+        "order": [
+          "static-methods",
+          "lifecycle",
+          "/^handle.+$/",
+          "/^on.+$/",
+          "/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/",
+          "everything-else",
+          ",/^render.+$/",
+          "render"
+        ]
+      }
+    ],
+    "class-methods-use-this": "off",
+    "comma-dangle": ["error", "never"],
+    "no-param-reassign": "off",
+    "curly": ["error", "all"],
+    "quotes": ["warn", "single"],
+    "no-multi-spaces": "error",
+    "camelcase": "off",
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-plusplus": [
+      2,
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-unused-vars": "warn",
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "ForInStatement",
+        "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+      },
+      {
+        "selector": "LabeledStatement",
+        "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+      },
+      {
+        "selector": "WithStatement",
+        "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "no-unused-expressions": "warn",
+    "no-shadow": "error",
+    "consistent-return": "warn", //TODO should be error
+    "newline-before-return": "error",
+    "object-curly-spacing": ["error", "always"],
+    "eol-last": ["error", "always"],
+    "import/no-cycle": "error",
+    "func-names": "off",
+    "import/no-useless-path-segments": "error",
+    "import/newline-after-import": "error",
+    "import/no-self-import": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "index", "sibling"],
+          ["unknown", "type", "object"]
+        ],
+        "newlines-between": "always"
+      }
+    ]
+  }
+}
