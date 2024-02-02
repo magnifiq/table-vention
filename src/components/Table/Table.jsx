@@ -21,6 +21,13 @@ export function Table(props){
               <tr key={el.id}>
                 <td>{el.id}</td>
                 <td>{el.title}</td>
+                <td>{el.description}</td>
+                <td>{el.price}</td>
+                <td>{el.discountPercentage}</td>
+                <td>{el.rating}</td>
+                <td>{el.stock}</td>
+                <td>{el.brand}</td>
+                <td>{el.category}</td>
               </tr>
             ))}
           </tbody>
