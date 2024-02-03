@@ -5,7 +5,7 @@ export function Table(props){
     return (
       <>
         <table className="table">
-          <thead className="table_header">
+          <thead className="table__header">
             <th>Id</th>
             <th>Title</th>
             <th>Description</th>
@@ -18,7 +18,7 @@ export function Table(props){
           </thead>
           <tbody>
             {props.data.products.map((el) => (
-              <tr key={el.id}>
+              <tr key={el.id} className="table__body__row">
                 <td>{el.id}</td>
                 <td>{el.title}</td>
                 <td>{el.description}</td>
