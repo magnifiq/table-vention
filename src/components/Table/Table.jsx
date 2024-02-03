@@ -4,7 +4,7 @@ export function Table(props){
     console.log(props)
     return (
       <>
-        <table>
+        <table className="table">
           <thead>
             <th>Id</th>
             <th>Title</th>
