@@ -5,7 +5,7 @@ export function Table(props){
     return (
       <>
         <table className="table">
-          <thead>
+          <thead className="table_header">
             <th>Id</th>
             <th>Title</th>
             <th>Description</th>
