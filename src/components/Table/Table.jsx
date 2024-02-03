@@ -16,7 +16,7 @@ export function Table(props){
             <th>Brand</th>
             <th>Category</th>
           </thead>
-          <tbody>
+          <tbody className="table__body">
             {props.data.products.map((el) => (
               <tr key={el.id} className="table__body__row">
                 <td>{el.id}</td>
