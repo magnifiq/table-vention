@@ -3,7 +3,7 @@ import "./App.css";
 import { Table } from "./components/Table/Table";
 
 function App() {
-  const [data, setData] = useState([]);
+ 
   const fetchData = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
