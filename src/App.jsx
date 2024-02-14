@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { AddForm } from "./components/AddForm/AddForm";
 import { Table } from "./components/Table/Table";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     try {
       const response = await fetch("https://dummyjson.com/products");
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setData(data);
     } catch (error) {
       console.error(error);
@@ -20,7 +21,12 @@ function App() {
     }, 1000);
   }, []);
 
-  return <Table data={data} />;
+  return (
+    <>
+      <AddForm />
+      <Table data={data} />;
+    </>
+  );
 }
 
 export default App;

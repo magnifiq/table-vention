@@ -1,0 +1,15 @@
+.form__content {
+
+}
+.form__content__inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form__content__inputs__input{
+  width: 200px;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
