@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import styles from "./Table.module.css";
 import PropTypes from "prop-types";
 
-export function Table(props) {
-  console.log(props);
+export function Table({data}) {
+  console.log(data);
   return (
     <>
       <table className={styles.table}>
@@ -18,8 +19,8 @@ export function Table(props) {
           <th>Category</th>
         </thead>
         <tbody className={styles.table__body}>
-          {props.data.products ? (
-            props.data.products.map((el) => (
+          {data ? (
+            data.map((el) => (
               <tr key={el.id} className={styles.table__body__row}>
                 <td>{el.id}</td>
                 <td>{el.title}</td>

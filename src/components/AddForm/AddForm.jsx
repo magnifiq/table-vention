@@ -1,11 +1,15 @@
+/* eslint-disable react/prop-types */
 import styles from "./AddForm.module.css";
 import { OperationButton } from "../OperationButton/OperationButton";
-export function AddForm() {
+
+
+export function AddForm({onSubmit}) {
+ 
   const addFormElement = (e) => {
     e.preventDefault();
-    const formData=new FormData(e.target)
-    const formProps=Object.fromEntries(formData)
-    console.log(formProps)
+    const formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+    onSubmit(formProps)
   };
   return (
     <>
@@ -61,10 +65,7 @@ export function AddForm() {
           />
         </div>
 
-        <OperationButton
-          onAction={()=>{}}
-          text="Add element"
-        />
+        <OperationButton onAction={() => {}} text="Add element" />
       </form>
     </>
   );

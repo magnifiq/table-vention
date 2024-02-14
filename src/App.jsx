@@ -9,8 +9,8 @@ function App() {
     try {
       const response = await fetch("https://dummyjson.com/products");
       const data = await response.json();
-      console.log(data);
-      setData(data);
+      console.log(data.products);
+      setData(data.products);
     } catch (error) {
       console.error(error);
     }
@@ -21,10 +21,30 @@ function App() {
     }, 1000);
   }, []);
 
+  const addElement = (item) => {
+    setData((prevData) => [
+      ...prevData,
+      {
+        id:
+          prevData.length > 0
+            ? Math.max(...prevData.map((i) => i.id)) + 1
+            : 1,
+        title: item.title,
+        description: item.description,
+        price: item.price,
+        discount: item.discount,
+        rating: item.rating,
+        stock: item.stock,
+        brand: item.brand,
+        category: item.category,
+      },
+    ]);
+  };
+
   return (
     <>
-      <AddForm />
-      <Table data={data} />;
+      <AddForm onSubmit={addElement} />
+      <Table data={data} />
     </>
   );
 }
