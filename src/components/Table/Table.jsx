@@ -1,12 +1,12 @@
-import "./Table.css";
+import styles from "./Table.module.css";
 import PropTypes from "prop-types";
 
 export function Table(props) {
   console.log(props);
   return (
     <>
-      <table className="table">
-        <thead className="table__header">
+      <table className={styles.table}>
+        <thead className={styles.table__header}>
           <th>Id</th>
           <th>Title</th>
           <th>Description</th>
@@ -17,10 +17,10 @@ export function Table(props) {
           <th>Brand</th>
           <th>Category</th>
         </thead>
-        <tbody className="table__body">
+        <tbody className={styles.table__body}>
           {props.data.products ? (
             props.data.products.map((el) => (
-              <tr key={el.id} className="table__body__row">
+              <tr key={el.id} className={styles.table__body__row}>
                 <td>{el.id}</td>
                 <td>{el.title}</td>
                 <td>{el.description}</td>
