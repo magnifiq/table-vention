@@ -1,8 +1,10 @@
-import styles from "./OperationButton.module.css"
 import PropTypes from "prop-types";
+import { Button } from "@mui/material";
 export function OperationButton({text, onAction}){
     return(
-        <button className={styles.button} onClick={onAction}>{text}</button>
+      <Button onClick={onAction} variant="contained">
+        {text}
+      </Button>
     )
 }
 OperationButton.propTypes = {
