@@ -8,17 +8,14 @@ function App() {
   const fetchData = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
-      const data = await response.json();
-      console.log(data.products);
-      setData(data.products);
+      const {products} = await response.json();
+      setData(products);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      fetchData();
-    }, 1000);
+    fetchData();
   }, []);
 
   const addElement = (item) => {
@@ -26,9 +23,7 @@ function App() {
       ...prevData,
       {
         id:
-          prevData.length > 0
-            ? Math.max(...prevData.map((i) => i.id)) + 1
-            : 1,
+          prevData.length > 0 ? Math.max(...prevData.map((i) => i.id)) + 1 : 1,
         title: item.title,
         description: item.description,
         price: item.price,
