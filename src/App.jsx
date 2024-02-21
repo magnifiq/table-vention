@@ -20,7 +20,7 @@ function App() {
     }, 1000);
   }, []);
 
-  
+  return <Table data={data} />;
 }
 
 export default App;
