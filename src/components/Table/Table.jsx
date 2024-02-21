@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
 import { EnhancedTableHead } from "./EnhancedTableHead";
-import styles from "./Table.module.css"
+import styles from "./Table.module.css";
 import {
   Box,
   Paper,
@@ -16,10 +16,10 @@ import {
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useMemo, useState} from "react";
+import { useMemo, useState } from "react";
 import useTableLogic from "./useTableLogic";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
-export const Table=({ data, setData, color,align, variant})=> {
+export const Table = ({ data, setData, color, align, variant }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const {
@@ -37,7 +37,7 @@ export const Table=({ data, setData, color,align, variant})=> {
     isSelected,
     emptyRows,
     stableSort,
-    getComparator
+    getComparator,
     //handleTableClick,
   } = useTableLogic(data);
 
@@ -49,26 +49,27 @@ export const Table=({ data, setData, color,align, variant})=> {
       ),
     [order, orderBy, page, rowsPerPage, data]
   );
-const openModal = (idItem) => {
-  setIsModalOpen(true);
-  setSelectedItemId(idItem);
-  return isModalOpen
-};
-const closeModal = () => {
-  setIsModalOpen(false);
-  setSelectedItemId(null);
-  return isModalOpen
-};
-const getSelectedInfo=()=>{
-  let res = data.map((el) => el.id === selectedItemId)[0];
-  console.log(res)
-  return res
-}
+  const openModal = (idItem) => {
+    setIsModalOpen(true);
+    setSelectedItemId(parseInt(idItem, 10));
+    return isModalOpen;
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItemId(null);
+    return isModalOpen;
+  };
+  const getSelectedInfo = () => {
+    let res = data.filter((el) => el.id === selectedItemId)[0];
+    return res;
+  };
+
   //we perform here event delegation
   const handleTableClick = (e) => {
     const [typeOfAction, idItem] = e.target.id.split("__");
     if (typeOfAction == "edit") {
-      openModal(idItem)
+      openModal(idItem);
+      getSelectedInfo();
     } else {
       let idNum = parseInt(idItem, 10);
       console.log(data.length);
@@ -76,10 +77,15 @@ const getSelectedInfo=()=>{
     }
   };
 
-  
   return (
     <Box className={styles.box}>
-      {isModalOpen && <ModalWindow onOpen={openModal} onClose={closeModal} infoItem={getSelectedInfo}/>}
+      {isModalOpen && (
+        <ModalWindow
+          onOpen={openModal}
+          onClose={closeModal}
+          infoItem={() => getSelectedInfo()}
+        />
+      )}
       <Paper className={styles.paper}>
         <TableContainer>
           <MuiTable
@@ -185,7 +191,7 @@ const getSelectedInfo=()=>{
       </Paper>
     </Box>
   );
-}
+};
 
 Table.propTypes = {
   data: PropTypes.arrayOf(
@@ -204,12 +210,12 @@ Table.propTypes = {
   color: PropTypes.string,
   align: PropTypes.string,
   variant: PropTypes.string,
-  setData: PropTypes.func
+  setData: PropTypes.func,
 };
 
-Table.defaultProps={
+Table.defaultProps = {
   color: "primary",
   align: "right",
-  variant: "outlined"
-}
+  variant: "outlined",
+};
 export default Table;

@@ -25,7 +25,7 @@ export const ModalWindow=({onOpen, onClose, infoItem})=>{
 }
 
 ModalWindow.PropTypes={
-    onOpen: PropTypes.func,
+    onOpen: PropTypes.boolean,
     onClose: PropTypes.func,
     infoItem: PropTypes.object
 }
