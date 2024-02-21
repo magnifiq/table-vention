@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
-
-import { useState, useMemo } from "react";
 import { EnhancedTableHead } from "./EnhancedTableHead";
+import styles from "./Table.module.css"
 import {
   Box,
   Paper,
@@ -11,96 +10,36 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Checkbox,
-  TableSortLabel,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
-
-export function Table({ data }) {
-  console.log(data);
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("title");
-  const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = data.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-  function getComparator(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+import { useMemo, useState} from "react";
+import useTableLogic from "./useTableLogic";
+import { ModalWindow } from "../ModalWindow/ModalWindow";
+export const Table=({ data, setData, color,align, variant})=> {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const {
+    dataTable,
+    order,
+    orderBy,
+    selected,
+    page,
+    rowsPerPage,
+    handleRequestSort,
+    handleSelectAllClick,
+    handleClick,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    isSelected,
+    emptyRows,
+    stableSort,
+    getComparator
+    //handleTableClick,
+  } = useTableLogic(data);
 
   const visibleRows = useMemo(
     () =>
@@ -108,26 +47,41 @@ export function Table({ data }) {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage, data]
   );
+const openModal = (idItem) => {
+  setIsModalOpen(true);
+  setSelectedItemId(idItem);
+  return isModalOpen
+};
+const closeModal = () => {
+  setIsModalOpen(false);
+  setSelectedItemId(null);
+  return isModalOpen
+};
   //we perform here event delegation
   const handleTableClick = (e) => {
-    const [typeOfAction, idItem]=e.target.id.split("__")
-    if (typeOfAction=="edit"){
-      console.log("edit modal window")
-    }else{
-      console.log(data)
+    const [typeOfAction, idItem] = e.target.id.split("__");
+    if (typeOfAction == "edit") {
+      openModal(idIem)
+    } else {
+      let idNum = parseInt(idItem, 10);
+      console.log(data.length);
+      setData((prevData) => prevData.filter((el) => el.id !== idNum));
     }
   };
+
+  
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+    <Box className={styles.box}>
+      <ModalWindow onOpen={openModal} onClose={closeModal}/>
+      <Paper className={styles.paper}>
         <TableContainer>
           <MuiTable
-            sx={{ minWidth: 750 }}
+            className={styles.table}
             aria-labelledby="tableTitle"
             size="medium"
-            onClick={(e)=>handleTableClick(e)}
+            onClick={(e) => handleTableClick(e)}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -138,6 +92,7 @@ export function Table({ data }) {
               rowCount={data.length}
             />
             <TableBody>
+              {console.log(dataTable)}
               {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
@@ -145,7 +100,6 @@ export function Table({ data }) {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -155,8 +109,9 @@ export function Table({ data }) {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        color="primary"
+                        color={color}
                         checked={isItemSelected}
+                        onClick={(event) => handleClick(event, row.id)}
                         inputProps={{
                           "aria-labelledby": labelId,
                         }}
@@ -170,31 +125,29 @@ export function Table({ data }) {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right">{row.title}</TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
-                    <TableCell align="right">{row.price}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align={align}>{row.title}</TableCell>
+                    <TableCell align={align}>{row.description}</TableCell>
+                    <TableCell align={align}>{row.price}</TableCell>
+                    <TableCell align={align}>
                       {row.discountPercentage}
                     </TableCell>
-                    <TableCell align="right">{row.rating}</TableCell>
-                    <TableCell align="right">{row.stock}</TableCell>
-                    <TableCell align="right">{row.brand}</TableCell>
-                    <TableCell align="right">{row.category}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align={align}>{row.rating}</TableCell>
+                    <TableCell align={align}>{row.stock}</TableCell>
+                    <TableCell align={align}>{row.brand}</TableCell>
+                    <TableCell align={align}>{row.category}</TableCell>
+                    <TableCell align={align}>
                       <Button
-                        variant="outlined"
+                        variant={variant}
                         id={`edit__${row.id}`}
-                        //onClick={handleEditItem}
                         startIcon={<EditIcon />}
                       >
                         Edit
                       </Button>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align={align}>
                       <Button
-                        variant="outlined"
+                        variant={variant}
                         id={`delete__${row.id}`}
-                        //onClick={handleDeleteItem}
                         startIcon={<DeleteIcon />}
                       >
                         Delete
@@ -243,6 +196,15 @@ Table.propTypes = {
       category: PropTypes.string.isRequired,
     })
   ).isRequired,
+  color: PropTypes.string,
+  align: PropTypes.string,
+  variant: PropTypes.string,
+  setData: PropTypes.func
 };
 
+Table.defaultProps={
+  color: "primary",
+  align: "right",
+  variant: "outlined"
+}
 export default Table;

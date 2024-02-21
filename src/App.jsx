@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <AddForm onSubmit={addElement} />
-      <Table data={data} />
+      <Table data={data} setData={setData}/>
     </>
   );
 }
