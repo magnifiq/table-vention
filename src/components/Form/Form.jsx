@@ -5,22 +5,69 @@ import { TextField, Container, Grid } from "@mui/material";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
-    console.log(defaultInputForm);
+export const Form = ({ onSubmit=null, onEdit=null, defaultInputForm, textButton }) => {
   const [inputForm, setInputForm] = useState(defaultInputForm);
+   const [errors, setErrors] = useState({});
+   const validateForm = (formProps) => {
+     const newErrors = {};
+
+     if (!formProps.title?.trim()) {
+       newErrors.title = "Title is required";
+     }
+     if (!formProps.description) {
+       newErrors.description = "Description is required";
+     }
+     if (isNaN(parseFloat(formProps.price))) {
+       newErrors.price = "Enter a valid number for price";
+     }
+     if (isNaN(parseFloat(formProps.discount))) {
+       newErrors.discount = "Enter a valid number for discount";
+     }
+     if (isNaN(parseFloat(formProps.rating))) {
+       newErrors.rating = "Enter a valid number for rating";
+     }
+     if (isNaN(parseFloat(formProps.stock))) {
+       newErrors.stock = "Enter a valid number for stock";
+     }
+     if (!formProps.brand) {
+       newErrors.brand = "Brand is required";
+     }
+     if (!formProps.category) {
+       newErrors.category = "Category is required";
+     }
+
+      setErrors(newErrors, () => {
+    console.log(errors); 
+  });
+     console.log(errors)
+     return Object.keys(newErrors).length === 0;
+   };
   const addFormElement = (e) => {
     e.preventDefault();
-    console.log(e);
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
     console.log(formProps);
-    if (formValidate(formProps)) {
+    if (validateForm(formProps)) {
       onSubmit(formProps);
     } else {
-      alert("Insert all necessary info");
+      alert(Object.keys(errors).forEach(key=>console.log(errors[key])));
       setInputForm(defaultInputForm);
     }
   };
+  const editItem = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+    if (onEdit && validateForm(formProps)) {
+      let id = defaultInputForm.id;
+      onEdit(id, formProps);
+    } else {
+      alert(errors);
+      setInputForm(defaultInputForm);
+    }
+  };
+   
+
   function formValidate(formProps) {
     const price = parseFloat(formProps.price);
     const discount = parseFloat(formProps.discount);
@@ -47,7 +94,7 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
 
   return (
     <Container maxWidth="sm" style={{ marginTop: "20px" }}>
-      <form onSubmit={addFormElement}>
+      <form onSubmit={editItem}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -58,6 +105,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, title: e.target.value })
               }
+              error={!!errors.title}
+              helperText={errors.title}
             />
           </Grid>
           <Grid item xs={12}>
@@ -69,6 +118,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, description: e.target.value })
               }
+              error={!!errors.description}
+              helperText={errors.description}
             />
           </Grid>
           <Grid item xs={6}>
@@ -80,6 +131,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, price: e.target.value })
               }
+              error={!!errors.price}
+              helperText={errors.price}
             />
           </Grid>
           <Grid item xs={6}>
@@ -91,6 +144,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, discount: e.target.value })
               }
+              error={!!errors.discount}
+              helperText={errors.discount}
             />
           </Grid>
           <Grid item xs={6}>
@@ -102,6 +157,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, rating: e.target.value })
               }
+              error={!!errors.rating}
+              helperText={errors.rating}
             />
           </Grid>
           <Grid item xs={6}>
@@ -113,6 +170,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, stock: e.target.value })
               }
+              error={!!errors.stock}
+              helperText={errors.stock}
             />
           </Grid>
           <Grid item xs={6}>
@@ -124,6 +183,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, brand: e.target.value })
               }
+              error={!!errors.brand}
+              helperText={errors.brand}
             />
           </Grid>
           <Grid item xs={6}>
@@ -135,6 +196,8 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
               onChange={(e) =>
                 setInputForm({ ...inputForm, category: e.target.value })
               }
+              error={!!errors.category}
+              helperText={errors.category}
             />
           </Grid>
         </Grid>
@@ -144,7 +207,7 @@ export const Form = ({ onSubmit, defaultInputForm, textButton }) => {
   );
 };
 
-Form.PropTypes={
-    textButton: PropTypes.string,
-    defaultInputForm: PropTypes.Object
-}
+Form.PropTypes = {
+  textButton: PropTypes.string,
+  defaultInputForm: PropTypes.Object,
+};

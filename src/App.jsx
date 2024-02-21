@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { AddForm } from "./components/AddForm/AddForm";
+import { Form } from "./components/Form/Form";
 import { Table } from "./components/Table/Table";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
   const fetchData = async () => {
     try {
       const response = await fetch("https://dummyjson.com/products");
-      const {products} = await response.json();
+      const { products } = await response.json();
       setData(products);
     } catch (error) {
       console.error(error);
@@ -16,7 +17,6 @@ function App() {
   };
   useEffect(() => {
     fetchData();
-    
   }, []);
 
   const addElement = (item) => {
@@ -36,11 +36,22 @@ function App() {
       },
     ]);
   };
-  console.log(data)
+  const editElement = (id, item) => {
+    const newArr=[...data]
+    newArr[id - 1] = { ...newArr[id - 1], ...item };
+    setData(newArr);
+  };
+  console.log(data);
   return (
     <>
       <AddForm onSubmit={addElement} />
-      <Table data={data} setData={setData}/>
+      <Form
+        onSubmit={addElement}
+        onEdit={editElement}
+        defaultInputForm=""
+        textButton=""
+      />
+      <Table data={data} setData={setData} />
     </>
   );
 }
