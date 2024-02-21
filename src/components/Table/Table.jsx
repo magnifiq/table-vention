@@ -59,11 +59,16 @@ const closeModal = () => {
   setSelectedItemId(null);
   return isModalOpen
 };
+const getSelectedInfo=()=>{
+  let res = data.map((el) => el.id === selectedItemId)[0];
+  console.log(res)
+  return res
+}
   //we perform here event delegation
   const handleTableClick = (e) => {
     const [typeOfAction, idItem] = e.target.id.split("__");
     if (typeOfAction == "edit") {
-      openModal(idIem)
+      openModal(idItem)
     } else {
       let idNum = parseInt(idItem, 10);
       console.log(data.length);
@@ -74,7 +79,7 @@ const closeModal = () => {
   
   return (
     <Box className={styles.box}>
-      <ModalWindow onOpen={openModal} onClose={closeModal}/>
+      {isModalOpen && <ModalWindow onOpen={openModal} onClose={closeModal} infoItem={getSelectedInfo}/>}
       <Paper className={styles.paper}>
         <TableContainer>
           <MuiTable

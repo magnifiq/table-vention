@@ -1,4 +1,4 @@
-import {AddForm} from "../AddForm/AddForm.jsx"
+import {Form} from "../Form/Form.jsx"
 import {Modal, Box} from '@mui/material'
 import PropTypes from "prop-types";
 
@@ -14,11 +14,11 @@ const style = {
   p: 4,
 };
 
-export const ModalWindow=({onOpen, onClose})=>{
+export const ModalWindow=({onOpen, onClose, infoItem})=>{
     return (
       <Modal open={onOpen} onClose={onClose}>
         <Box sx={style}>
-           <AddForm />
+           <Form defaultInputForm={infoItem} textButton="Edit element"/>
         </Box>
       </Modal>
     );
@@ -26,5 +26,6 @@ export const ModalWindow=({onOpen, onClose})=>{
 
 ModalWindow.PropTypes={
     onOpen: PropTypes.func,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    infoItem: PropTypes.object
 }
