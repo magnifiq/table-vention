@@ -16,6 +16,7 @@ function App() {
   };
   useEffect(() => {
     fetchData();
+    
   }, []);
 
   const addElement = (item) => {
@@ -35,7 +36,7 @@ function App() {
       },
     ]);
   };
-
+  console.log(data)
   return (
     <>
       <AddForm onSubmit={addElement} />

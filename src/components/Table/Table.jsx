@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 
 import { useState, useMemo } from "react";
-
+import { EnhancedTableHead } from "./EnhancedTableHead";
 import {
   Box,
   Paper,
@@ -16,174 +16,13 @@ import {
   Checkbox,
   TableSortLabel,
 } from "@mui/material";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
-function EnhancedTableHead({
-  numSelected,
-  order,
-  orderBy,
-  onSelectAllClick,
-  onRequestSort,
-  rowCount,
-}) {
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all items",
-            }}
-          />
-        </TableCell>
-        <TableCell
-          key="id"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "id" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "id"}
-            direction={orderBy === "id" ? order : "asc"}
-            onClick={createSortHandler("id")}
-          >
-            ID
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="title"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "title" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "title"}
-            direction={orderBy === "title" ? order : "asc"}
-            onClick={createSortHandler("title")}
-          >
-            Title
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="description"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "description" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "description"}
-            direction={orderBy === "description" ? order : "asc"}
-            onClick={createSortHandler("description")}
-          >
-            Description
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="price"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "price" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "price"}
-            direction={orderBy === "price" ? order : "asc"}
-            onClick={createSortHandler("price")}
-          >
-            Price
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="discountPercentage"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "discountPercentage" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "discountPercentage"}
-            direction={orderBy === "discountPercentage" ? order : "asc"}
-            onClick={createSortHandler("discountPercentage")}
-          >
-            Discount Percentage
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="rating"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "rating" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "rating"}
-            direction={orderBy === "rating" ? order : "asc"}
-            onClick={createSortHandler("rating")}
-          >
-            Rating
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="stock"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "stock" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "stock"}
-            direction={orderBy === "stock" ? order : "asc"}
-            onClick={createSortHandler("stock")}
-          >
-            Stock
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="brand"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "brand" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "brand"}
-            direction={orderBy === "brand" ? order : "asc"}
-            onClick={createSortHandler("brand")}
-          >
-            Brand
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="category"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "category" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "category"}
-            direction={orderBy === "category" ? order : "asc"}
-            onClick={createSortHandler("category")}
-          >
-            Category
-          </TableSortLabel>
-        </TableCell>
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 export function Table({ data }) {
+  console.log(data);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("title");
   const [selected, setSelected] = useState([]);
@@ -235,14 +74,14 @@ export function Table({ data }) {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
   function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
   }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
   function getComparator(order, orderBy) {
     return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
@@ -271,7 +110,15 @@ export function Table({ data }) {
       ),
     [order, orderBy, page, rowsPerPage]
   );
-
+  //we perform here event delegation
+  const handleTableClick = (e) => {
+    const [typeOfAction, idItem]=e.target.id.split("__")
+    if (typeOfAction=="edit"){
+      console.log("edit modal window")
+    }else{
+      console.log(data)
+    }
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -280,6 +127,7 @@ export function Table({ data }) {
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size="medium"
+            onClick={(e)=>handleTableClick(e)}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -332,6 +180,26 @@ export function Table({ data }) {
                     <TableCell align="right">{row.stock}</TableCell>
                     <TableCell align="right">{row.brand}</TableCell>
                     <TableCell align="right">{row.category}</TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="outlined"
+                        id={`edit__${row.id}`}
+                        //onClick={handleEditItem}
+                        startIcon={<EditIcon />}
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="outlined"
+                        id={`delete__${row.id}`}
+                        //onClick={handleDeleteItem}
+                        startIcon={<DeleteIcon />}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
