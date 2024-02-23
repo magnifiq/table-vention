@@ -5,43 +5,47 @@ import { TextField, Container, Grid } from "@mui/material";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export const Form = ({ onSubmit=null, onEdit=null, defaultInputForm, textButton }) => {
+export const Form = ({
+  onSubmit = null,
+  onEdit = null,
+  defaultInputForm,
+  textButton,
+}) => {
   const [inputForm, setInputForm] = useState(defaultInputForm);
-   const [errors, setErrors] = useState({});
-   const validateForm = (formProps) => {
-     const newErrors = {};
+  const [errors, setErrors] = useState({});
+  const validateForm = (formProps) => {
+    const newErrors = {};
 
-     if (!formProps.title?.trim()) {
-       newErrors.title = "Title is required";
-     }
-     if (!formProps.description) {
-       newErrors.description = "Description is required";
-     }
-     if (isNaN(parseFloat(formProps.price))) {
-       newErrors.price = "Enter a valid number for price";
-     }
-     if (isNaN(parseFloat(formProps.discount))) {
-       newErrors.discount = "Enter a valid number for discount";
-     }
-     if (isNaN(parseFloat(formProps.rating))) {
-       newErrors.rating = "Enter a valid number for rating";
-     }
-     if (isNaN(parseFloat(formProps.stock))) {
-       newErrors.stock = "Enter a valid number for stock";
-     }
-     if (!formProps.brand) {
-       newErrors.brand = "Brand is required";
-     }
-     if (!formProps.category) {
-       newErrors.category = "Category is required";
-     }
+    if (!formProps.title?.trim()) {
+      newErrors.title = "Title is required";
+    }
+    if (!formProps.description) {
+      newErrors.description = "Description is required";
+    }
+    if (isNaN(parseFloat(formProps.price))) {
+      newErrors.price = "Enter a valid number for price";
+    }
+    if (isNaN(parseFloat(formProps.discount))) {
+      newErrors.discount = "Enter a valid number for discount";
+    }
+    if (isNaN(parseFloat(formProps.rating))) {
+      newErrors.rating = "Enter a valid number for rating";
+    }
+    if (isNaN(parseFloat(formProps.stock))) {
+      newErrors.stock = "Enter a valid number for stock";
+    }
+    if (!formProps.brand) {
+      newErrors.brand = "Brand is required";
+    }
+    if (!formProps.category) {
+      newErrors.category = "Category is required";
+    }
 
-      setErrors(newErrors, () => {
-    console.log(errors); 
-  });
-     console.log(errors)
-     return Object.keys(newErrors).length === 0;
-   };
+    setErrors(newErrors, () => {
+      console.log(errors);
+    });
+    return Object.keys(newErrors).length === 0;
+  };
   const addFormElement = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -50,7 +54,11 @@ export const Form = ({ onSubmit=null, onEdit=null, defaultInputForm, textButton 
     if (validateForm(formProps)) {
       onSubmit(formProps);
     } else {
-      alert(Object.keys(errors).forEach(key=>console.log(errors[key])));
+      alert(
+        Object.keys(errors)
+          .map((key) => errors[key])
+          .join("\n")
+      );
       setInputForm(defaultInputForm);
     }
   };
@@ -66,7 +74,6 @@ export const Form = ({ onSubmit=null, onEdit=null, defaultInputForm, textButton 
       setInputForm(defaultInputForm);
     }
   };
-   
 
   function formValidate(formProps) {
     const price = parseFloat(formProps.price);
