@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { AddForm } from "./components/AddForm/AddForm";
 import { Form } from "./components/Form/Form";
 import { Table } from "./components/Table/Table";
-
+import defaultInputValues from "./components/Form/defaultInputValues.json"
 function App() {
   const [data, setData] = useState([]);
   const fetchData = async () => {
@@ -37,23 +36,21 @@ function App() {
     ]);
   };
   const editElement = (id, item) => {
-    console.log(item)
+    console.log(item);
     console.log(id);
-    const newArr=[...data]
-    console.log(newArr)
+    const newArr = [...data];
+    console.log(newArr);
     newArr[id - 1] = { ...newArr[id - 1], ...item };
     setData(newArr);
   };
   return (
     <>
-      <AddForm onSubmit={addElement} />
       <Form
         onSubmit={addElement}
-        onEdit={editElement}
-        defaultInputForm=""
-        textButton=""
+        defaultInputForm={defaultInputValues}
+        textButton="Add element"
       />
-      <Table data={data} setData={setData} onEdit={editElement}/>
+      <Table data={data} setData={setData} onEdit={editElement} />
     </>
   );
 }

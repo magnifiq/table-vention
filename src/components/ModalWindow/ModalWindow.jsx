@@ -1,33 +1,30 @@
 import {Form} from "../Form/Form.jsx"
 import {Modal, Box} from '@mui/material'
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
+import styles from "./ModalWindow.module.css"
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 
 export const ModalWindow=({onOpen, onClose, infoItem, flagEdit, onEdit})=>{
   
     return (
       <Modal open={onOpen} onClose={onClose}>
-        <Box sx={style}>
-           <Form flagEdit={flagEdit} defaultInputForm={infoItem} textButton="Edit element" onEdit={onEdit}/>
+        <Box className={styles.module}>
+          <Form
+            flagEdit={flagEdit}
+            defaultInputForm={infoItem}
+            textButton="Edit element"
+            onEdit={onEdit}
+          />
         </Box>
       </Modal>
     );
 }
 
-ModalWindow.PropTypes={
-    onOpen: PropTypes.bool,
-    onClose: PropTypes.bool,
-    infoItem: PropTypes.object
-}
+ModalWindow.propTypes = {
+  onOpen: propTypes.bool,
+  onClose: propTypes.bool,
+  infoItem: propTypes.object,
+  flagEdit: propTypes.bool,
+  onEdit: propTypes.func
+};
