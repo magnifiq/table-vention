@@ -54,7 +54,14 @@ export const EnhancedTableHead=({
             </TableSortLabel>
           </TableCell>
         ))}
-       
+        <TableCell
+          key="operations"
+          align="center"
+          padding={padding}
+          colSpan={2}
+        >
+          Operations
+        </TableCell>
       </TableRow>
     </TableHead>
   );
