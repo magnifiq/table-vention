@@ -28,7 +28,7 @@ function App() {
         title: item.title,
         description: item.description,
         price: item.price,
-        discount: item.discount,
+        discount: item.discountPercentage,
         rating: item.rating,
         stock: item.stock,
         brand: item.brand,
@@ -37,11 +37,13 @@ function App() {
     ]);
   };
   const editElement = (id, item) => {
+    console.log(item)
+    console.log(id);
     const newArr=[...data]
+    console.log(newArr)
     newArr[id - 1] = { ...newArr[id - 1], ...item };
     setData(newArr);
   };
-  console.log(data);
   return (
     <>
       <AddForm onSubmit={addElement} />
@@ -51,7 +53,7 @@ function App() {
         defaultInputForm=""
         textButton=""
       />
-      <Table data={data} setData={setData} />
+      <Table data={data} setData={setData} onEdit={editElement}/>
     </>
   );
 }

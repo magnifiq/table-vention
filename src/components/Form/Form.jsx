@@ -2,16 +2,19 @@
 //import styles from "./AddForm.module.css";
 import { OperationButton } from "../OperationButton/OperationButton";
 import { TextField, Container, Grid } from "@mui/material";
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import propTypes from "prop-types";
 
 export const Form = ({
-  onSubmit = null,
-  onEdit = null,
+  flagEdit=false,
+  onSubmit,
+  onEdit,
   defaultInputForm,
   textButton,
 }) => {
   const [inputForm, setInputForm] = useState(defaultInputForm);
+
+  const [id, setId]=useState(defaultInputForm.id)
   const [errors, setErrors] = useState({});
   const validateForm = (formProps) => {
     const newErrors = {};
@@ -51,57 +54,69 @@ export const Form = ({
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
     console.log(formProps);
-    if (validateForm(formProps)) {
+    if (formValidate(formProps)) {
       onSubmit(formProps);
     } else {
-      alert(
-        Object.keys(errors)
-          .map((key) => errors[key])
-          .join("\n")
-      );
       setInputForm(defaultInputForm);
     }
   };
-  const editItem = (e) => {
+  const editItem = (id,e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    if (onEdit && validateForm(formProps)) {
-      let id = defaultInputForm.id;
+     console.log(formProps);
+    if (formValidate(formProps)) {
+      console.log(`inside edit is ${id}`);
+      console.log(formProps)
       onEdit(id, formProps);
     } else {
-      alert(errors);
       setInputForm(defaultInputForm);
     }
   };
 
   function formValidate(formProps) {
+    const errors = {};
     const price = parseFloat(formProps.price);
     const discount = parseFloat(formProps.discount);
     const rating = parseFloat(formProps.rating);
     const stock = parseFloat(formProps.stock);
 
-    if (
-      formProps.title?.trim() &&
-      formProps.description &&
-      !isNaN(price) &&
-      !isNaN(discount) &&
-      !isNaN(rating) &&
-      !isNaN(stock) &&
-      formProps.brand &&
-      formProps.category
-    ) {
-      return true;
+    if (!formProps.title?.trim()) {
+      errors.title = "Title is required";
     }
-    if (isNaN(price) || isNaN(discount) || isNaN(rating) || isNaN(stock)) {
-      alert("Enter numbers for price, discount, rating, stock");
+    if (!formProps.description) {
+      errors.description = "Description is required";
     }
-    return false;
+    if (isNaN(price)) {
+      errors.price = "Enter a valid number for price";
+    }
+    if (isNaN(discount)) {
+      errors.discount = "Enter a valid number for discount";
+    }
+    if (isNaN(rating)) {
+      errors.rating = "Enter a valid number for rating";
+    }
+    if (isNaN(stock)) {
+      errors.stock = "Enter a valid number for stock";
+    }
+    if (!formProps.brand) {
+      errors.brand = "Brand is required";
+    }
+    if (!formProps.category) {
+      errors.category = "Category is required";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      alert(Object.values(errors).join("\n"));
+      return false;
+    }
+
+    return true;
   }
 
   return (
     <Container maxWidth="sm" style={{ marginTop: "20px" }}>
-      <form onSubmit={editItem}>
+      <form onSubmit={flagEdit ? (e) => editItem(id, e) : addFormElement}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -112,8 +127,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, title: e.target.value })
               }
-              error={!!errors.title}
-              helperText={errors.title}
             />
           </Grid>
           <Grid item xs={12}>
@@ -125,8 +138,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, description: e.target.value })
               }
-              error={!!errors.description}
-              helperText={errors.description}
             />
           </Grid>
           <Grid item xs={6}>
@@ -138,8 +149,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, price: e.target.value })
               }
-              error={!!errors.price}
-              helperText={errors.price}
             />
           </Grid>
           <Grid item xs={6}>
@@ -147,12 +156,10 @@ export const Form = ({
               fullWidth
               label="Discount"
               name="discount"
-              value={inputForm.discount}
+              value={inputForm.discountPercentage}
               onChange={(e) =>
                 setInputForm({ ...inputForm, discount: e.target.value })
               }
-              error={!!errors.discount}
-              helperText={errors.discount}
             />
           </Grid>
           <Grid item xs={6}>
@@ -164,8 +171,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, rating: e.target.value })
               }
-              error={!!errors.rating}
-              helperText={errors.rating}
             />
           </Grid>
           <Grid item xs={6}>
@@ -177,8 +182,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, stock: e.target.value })
               }
-              error={!!errors.stock}
-              helperText={errors.stock}
             />
           </Grid>
           <Grid item xs={6}>
@@ -190,8 +193,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, brand: e.target.value })
               }
-              error={!!errors.brand}
-              helperText={errors.brand}
             />
           </Grid>
           <Grid item xs={6}>
@@ -203,8 +204,6 @@ export const Form = ({
               onChange={(e) =>
                 setInputForm({ ...inputForm, category: e.target.value })
               }
-              error={!!errors.category}
-              helperText={errors.category}
             />
           </Grid>
         </Grid>
@@ -214,7 +213,7 @@ export const Form = ({
   );
 };
 
-Form.PropTypes = {
-  textButton: PropTypes.string,
-  defaultInputForm: PropTypes.Object,
+Form.propTypes = {
+  textButton: propTypes.string,
+  defaultInputForm: propTypes.Object,
 };

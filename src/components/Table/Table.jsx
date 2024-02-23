@@ -19,7 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useMemo, useState } from "react";
 import useTableLogic from "./useTableLogic";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
-export const Table = ({ data, setData, color, align, variant }) => {
+export const Table = ({ data, setData, color, align, variant, onEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const {
@@ -72,18 +72,19 @@ export const Table = ({ data, setData, color, align, variant }) => {
       getSelectedInfo();
     } else {
       let idNum = parseInt(idItem, 10);
-      console.log(data.length);
       setData((prevData) => prevData.filter((el) => el.id !== idNum));
     }
   };
-
+  
   return (
     <Box className={styles.box}>
       {isModalOpen && (
         <ModalWindow
+          flagEdit='true'
           onOpen={openModal}
           onClose={closeModal}
-          infoItem={() => getSelectedInfo()}
+          infoItem={getSelectedInfo()}
+          onEdit={onEdit}
         />
       )}
       <Paper className={styles.paper}>
@@ -103,7 +104,6 @@ export const Table = ({ data, setData, color, align, variant }) => {
               rowCount={data.length}
             />
             <TableBody>
-              {console.log(dataTable)}
               {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;

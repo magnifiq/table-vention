@@ -14,18 +14,20 @@ const style = {
   p: 4,
 };
 
-export const ModalWindow=({onOpen, onClose, infoItem})=>{
+
+export const ModalWindow=({onOpen, onClose, infoItem, flagEdit, onEdit})=>{
+  
     return (
       <Modal open={onOpen} onClose={onClose}>
         <Box sx={style}>
-           <Form defaultInputForm={infoItem} textButton="Edit element"/>
+           <Form flagEdit={flagEdit} defaultInputForm={infoItem} textButton="Edit element" onEdit={onEdit}/>
         </Box>
       </Modal>
     );
 }
 
 ModalWindow.PropTypes={
-    onOpen: PropTypes.boolean,
-    onClose: PropTypes.func,
+    onOpen: PropTypes.bool,
+    onClose: PropTypes.bool,
     infoItem: PropTypes.object
 }
