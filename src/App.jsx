@@ -11,7 +11,7 @@ function App() {
       console.log(data)
       setData(data);
     } catch (error) {
-      console.error(error);
+     
     }
   };
   useEffect(() => {
