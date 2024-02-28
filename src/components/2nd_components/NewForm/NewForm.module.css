@@ -1,3 +1,6 @@
-.formInput  {
+.form__input  {
   margin-bottom: 10px;
+}
+.error__input{
+    color: red;
 }

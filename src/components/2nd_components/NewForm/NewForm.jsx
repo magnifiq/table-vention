@@ -14,25 +14,34 @@ export default function NewForm() {
         <Grid container spacing={2}>
           <TextField
             sx={{ marginBottom: "10px" }}
-            {...register("name")}
+            {...register("name", { required: "Put your name please" })}
             fullWidth
             label="name"
             className={styles.formInput}
           />
+          <p className={styles.error__input}>{errors.name?.message}</p>
           <TextField
-            {...register("email")}
+            {...register("email", { required: "Put your email please" })}
             sx={{ marginBottom: "10px" }}
             fullWidth
             label="email"
             className={styles.formInput}
           />
+          <p className={styles.error__input}>{errors.email?.message}</p>
           <TextField
-            {...register("password")}
+            {...register("password", {
+              required: "Put your password please",
+              minLength: {
+                value: 10,
+                message: "The min length is 10",
+              },
+            })}
             sx={{ marginBottom: "10px" }}
             fullWidth
             label="password"
             type="password"
           />
+          <p className={styles.error__input}>{errors.password?.message}</p>
         </Grid>
         <Button type="submit" variant="contained">
           Submit
