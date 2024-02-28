@@ -167,7 +167,6 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
                   </TableRow>
                 );
               })}
-              {console.log(emptyRows)}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
