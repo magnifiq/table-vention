@@ -3,6 +3,7 @@ import "./App.css";
 import { Form } from "./components/Form/Form";
 import { Table } from "./components/Table/Table";
 import defaultInputValues from "./components/Form/defaultInputValues.json"
+import Button from "@mui/material/Button";
 function App() {
   const [data, setData] = useState([]);
   const fetchData = async () => {
@@ -45,6 +46,7 @@ function App() {
   };
   return (
     <>
+      <Button href='/second_task'>Go to the second task</Button>
       <Form
         onSubmit={addElement}
         defaultInputForm={defaultInputValues}
