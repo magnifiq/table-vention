@@ -2,5 +2,13 @@
   margin-bottom: 10px;
 }
 .error__input{
-    color: red;
+    color: red ;
+}
+
+.btn__remove__grid{
+    margin-bottom:10px;
+    text-align: right;
+}
+.btn__append__grid{
+    margin-right: 10px;
 }
