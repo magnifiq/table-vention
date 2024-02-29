@@ -2,6 +2,7 @@ import Button from "@mui/material/Button";
 import { TextField, Container, Grid } from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
 import styles from "./NewForm.module.css";
+import NewFormInput from "./NewFormInput.jsx"
 export default function NewForm() {
   const {
     register,
@@ -24,40 +25,19 @@ export default function NewForm() {
     <Container maxWidth="sm" style={{ marginTop: "20px" }}>
       <form onSubmit={handleSubmit((data) => console.log(data))}>
         <Grid container spacing={2}>
-          <TextField
-            sx={{ marginBottom: "10px" }}
-            {...register("name", { required: "Put your name please" })}
-            fullWidth
-            label="name"
-            className={styles.formInput}
-          />
+            <NewFormInput label="name" register={register}/>
           <p className={styles.error__input}>{errors.name?.message}</p>
-          <TextField
-            {...register("email", { required: "Put your email please" })}
-            sx={{ marginBottom: "10px" }}
-            fullWidth
-            label="email"
-            className={styles.formInput}
-          />
+          <NewFormInput label="email" register={register}/>
           <p className={styles.error__input}>{errors.email?.message}</p>
-          <TextField
-            {...register("password", {
-              required: "Put your password please",
-              minLength: {
+           <NewFormInput type="password" label="password" register={register} extraValidation={{minLength: {
                 value: 10,
                 message: "The min length is 10",
-              },
-            })}
-            sx={{ marginBottom: "10px" }}
-            fullWidth
-            label="password"
-            type="password"
-          />
+              }}}/>
           <p className={styles.error__input}>{errors.password?.message}</p>
-          <h3>Additional fields (optional)</h3>
+          <h3 className={styles.header_upper}>Additional fields (optional)</h3>
           {fields.map((field, index) => {
             return (
-              <Grid container spacing={2} alignItems="flex-end" key={field.id} >
+              <Grid container spacing={2} alignItems="flex-end" key={field.id}>
                 <Grid item xs={12}>
                   <TextField
                     sx={{ marginBottom: "10px" }}
@@ -76,8 +56,8 @@ export default function NewForm() {
                     className={styles.formInput}
                   />
                 </Grid>
-                <Grid item xs={12} className={styles.btn__remove__grid}>
-                  <Button variant="contained" onClick={() => remove(index)} >
+                <Grid item xs={12} className={styles.btn__remove__grid} sx={{marginBottom: "10px"}}>
+                  <Button variant="contained" onClick={() => remove(index)}>
                     Remove
                   </Button>
                 </Grid>
@@ -85,7 +65,7 @@ export default function NewForm() {
             );
           })}
         </Grid>
-         <Button variant="contained" onClick={() => append()} className={styles.btn__append__grid}>
+         <Button variant="contained" onClick={() => append()} className={styles.btn__append__grid} sx={{marginRight: "10px"}}>
           Append
         </Button>
         <Button type="submit" variant="contained">
