@@ -1,9 +1,15 @@
 import Button from "@mui/material/Button";
-import { TextField, Container, Grid, Checkbox } from "@mui/material";
+import {
+  TextField,
+  Container,
+  Grid,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
 import styles from "./NewForm.module.css";
 import NewFormInput from "./NewFormInput.jsx";
-import {useState} from "react"
+import { useState } from "react";
 export default function NewForm() {
   const [checked, setChecked] = useState(true);
 
@@ -45,55 +51,69 @@ export default function NewForm() {
             }}
           />
           <p className={styles.error__input}>{errors.password?.message}</p>
-          <Checkbox
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "controlled" }}
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checked}
+                onChange={handleChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+            label="Do you want to fill in additional info?"
           />
-          <h3 className={styles.header_upper}>Additional fields (optional)</h3>
-          {fields.map((field, index) => {
-            return (
-              <Grid container spacing={2} alignItems="flex-end" key={field.id}>
-                <Grid item xs={12}>
-                  <TextField
-                    sx={{ marginBottom: "10px" }}
-                    {...register(`additionalInfo.${index}.skills`)}
-                    fullWidth
-                    label="Skills"
-                    className={styles.formInput}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    sx={{ marginBottom: "10px" }}
-                    {...register(`additionalInfo.${index}.hobbies`)}
-                    fullWidth
-                    label="Hobbies"
-                    className={styles.formInput}
-                  />
-                </Grid>
+          {checked && (
+            <>
+              <h3 className={styles.header_upper}>
+                Additional fields (optional)
+              </h3>
+              <Button
+                variant="contained"
+                onClick={() => append()}
+                //className={styles.btn__append__grid}
+                sx={{ marginBottom: "10px" }}
+              >
+                Append
+              </Button>
+
+              {fields.map((field, index) => (
                 <Grid
-                  item
-                  xs={12}
-                  className={styles.btn__remove__grid}
-                  sx={{ marginBottom: "10px" }}
+                  container
+                  spacing={2}
+                  alignItems="flex-end"
+                  key={field.id}
                 >
-                  <Button variant="contained" onClick={() => remove(index)}>
-                    Remove
-                  </Button>
+                  <Grid item xs={12}>
+                    <TextField
+                      {...register(`additionalInfo.${index}.skills`)}
+                      fullWidth
+                      label="Skills"
+                      style={styles.formInput}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      {...register(`additionalInfo.${index}.hobbies`)}
+                      fullWidth
+                      label="Hobbies"
+                      style={styles.formInput}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    //style={styles.btn__remove__grid}
+                    sx={{ marginBottom: "10px", textAlign: "right" }}
+                  >
+                    <Button variant="contained" onClick={() => remove(index)}>
+                      Remove
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-            );
-          })}
+              ))}
+            </>
+          )}
         </Grid>
-        <Button
-          variant="contained"
-          onClick={() => append()}
-          className={styles.btn__append__grid}
-          sx={{ marginRight: "10px" }}
-        >
-          Append
-        </Button>
+
         <Button type="submit" variant="contained">
           Submit
         </Button>
