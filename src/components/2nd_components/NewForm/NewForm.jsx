@@ -87,7 +87,7 @@ export default function NewForm() {
                       {...register(`additionalInfo.${index}.skills`)}
                       fullWidth
                       label="Skills"
-                      style={styles.formInput}
+                      style={{ ...styles.formInput }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -95,7 +95,7 @@ export default function NewForm() {
                       {...register(`additionalInfo.${index}.hobbies`)}
                       fullWidth
                       label="Hobbies"
-                      style={styles.formInput}
+                      style={{ ...styles.formInput }}
                     />
                   </Grid>
                   <Grid
