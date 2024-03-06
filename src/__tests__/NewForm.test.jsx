@@ -1,7 +1,8 @@
 import React from "react"
 import NewForm from '../components/2nd_components/NewForm/NewForm'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent,screen } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
+import "@testing-library/jest-dom";
 
 
 class ErrorBoundary extends React.Component {
@@ -63,7 +64,7 @@ describe("NewForm", () => {
   describe("with invalid name", ()=>{
       it("render with invalid name value", async ()=>{
         jest.spyOn(console, "log").mockImplementation(() => {});
-        const { getByLabelText, getByRole } = render(<NewForm />);
+        const { getByLabelText, getByRole, getByText} = render(<NewForm />);
         await act(async()=>{
             fireEvent.change(getByLabelText("name"), {
               target: { value: "" },
@@ -80,7 +81,9 @@ describe("NewForm", () => {
             fireEvent.click(getByRole('button', {name: "Submit"}))
         })
 
-        
+        expect(console.log).not.toHaveBeenCalled()
+        expect(screen.getByText("Put your name please")).toBeInTheDocument();
+        console.log.mockRestore();
       })
   })
 });
