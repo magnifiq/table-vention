@@ -1,4 +1,4 @@
-[
+const COLUMNS=[
   { "key": "id", "label": "ID" },
   { "key": "title", "label": "Title" },
   { "key": "description", "label": "Description" },
@@ -9,3 +9,4 @@
   { "key": "brand", "label": "Brand" },
   { "key": "category", "label": "Category" }
 ]
+export default COLUMNS

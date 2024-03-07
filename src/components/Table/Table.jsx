@@ -17,7 +17,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useMemo, useState } from "react";
-import useTableLogic from "./useTableLogic";
+import useTableLogic from "../../hooks/useTableLogic";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
 export const Table = ({ data, setData, color, align, variant, onEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

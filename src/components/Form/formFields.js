@@ -1,4 +1,4 @@
-[
+const FORM_FIELDS=[
   { "label": "Title", "name": "title" },
   { "label": "Description", "name": "description" },
   { "label": "Price", "name": "price" },
@@ -8,3 +8,5 @@
   { "label": "Brand", "name": "brand" },
   { "label": "Category", "name": "category" }
 ]
+
+export default FORM_FIELDS

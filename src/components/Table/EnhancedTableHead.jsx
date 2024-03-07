@@ -6,7 +6,7 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import columns from "./tableHeadData.json"
+import COLUMNS from "./tableHeadData.js"
 
 export const EnhancedTableHead=({
   numSelected,
@@ -38,7 +38,7 @@ export const EnhancedTableHead=({
           />
         </TableCell>
 
-        {columns.map((column) => (
+        {COLUMNS.map((column) => (
           <TableCell
             key={column.key}
             align={align}
@@ -54,7 +54,14 @@ export const EnhancedTableHead=({
             </TableSortLabel>
           </TableCell>
         ))}
-       
+        <TableCell
+          key="operations"
+          align="center"
+          padding={padding}
+          colSpan={2}
+        >
+          Operations
+        </TableCell>
       </TableRow>
     </TableHead>
   );
