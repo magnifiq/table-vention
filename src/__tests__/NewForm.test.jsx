@@ -60,58 +60,57 @@ describe("NewForm", () => {
       expect(screen.getByText("Put your name please")).toBeInTheDocument();
       console.log.mockRestore();
     });
-    
   });
 
-   describe("with invalid email", () => {
-     it("render with invalid email value", async () => {
-       jest.spyOn(console, "log").mockImplementation(() => {});
-       const { getByLabelText, getByRole, getByText } = render(<NewForm />);
-       await act(async () => {
-         fireEvent.change(getByLabelText("name"), {
-           target: { value: "Anna" },
-         });
-         fireEvent.change(getByLabelText("email"), {
-           target: { value: "" },
-         });
-         fireEvent.change(getByLabelText("password"), {
-           target: { value: "fsrdrhhjddhj" },
-         });
-       });
+  describe("with invalid email", () => {
+    it("render with invalid email value", async () => {
+      jest.spyOn(console, "log").mockImplementation(() => {});
+      const { getByLabelText, getByRole, getByText } = render(<NewForm />);
+      await act(async () => {
+        fireEvent.change(getByLabelText("name"), {
+          target: { value: "Anna" },
+        });
+        fireEvent.change(getByLabelText("email"), {
+          target: { value: "" },
+        });
+        fireEvent.change(getByLabelText("password"), {
+          target: { value: "fsrdrhhjddhj" },
+        });
+      });
 
-       await act(async () => {
-         fireEvent.click(getByRole("button", { name: "Submit" }));
-       });
+      await act(async () => {
+        fireEvent.click(getByRole("button", { name: "Submit" }));
+      });
 
-       expect(console.log).not.toHaveBeenCalled();
-       expect(screen.getByText("Put your email please")).toBeInTheDocument();
-       console.log.mockRestore();
-     });
-   });
+      expect(console.log).not.toHaveBeenCalled();
+      expect(screen.getByText("Put your email please")).toBeInTheDocument();
+      console.log.mockRestore();
+    });
+  });
 
-   describe("with invalid password", () => {
-     it("render with invalid password value", async () => {
-       jest.spyOn(console, "log").mockImplementation(() => {});
-       const { getByLabelText, getByRole, getByText } = render(<NewForm />);
-       await act(async () => {
-         fireEvent.change(getByLabelText("name"), {
-           target: { value: "Anna" },
-         });
-         fireEvent.change(getByLabelText("email"), {
-           target: { value: "anna@gmail.com" },
-         });
-         fireEvent.change(getByLabelText("password"), {
-           target: { value: "fg" },
-         });
-       });
+  describe("with invalid password", () => {
+    it("render with invalid password value", async () => {
+      jest.spyOn(console, "log").mockImplementation(() => {});
+      const { getByLabelText, getByRole, getByText } = render(<NewForm />);
+      await act(async () => {
+        fireEvent.change(getByLabelText("name"), {
+          target: { value: "Anna" },
+        });
+        fireEvent.change(getByLabelText("email"), {
+          target: { value: "anna@gmail.com" },
+        });
+        fireEvent.change(getByLabelText("password"), {
+          target: { value: "fg" },
+        });
+      });
 
-       await act(async () => {
-         fireEvent.click(getByRole("button", { name: "Submit" }));
-       });
+      await act(async () => {
+        fireEvent.click(getByRole("button", { name: "Submit" }));
+      });
 
-       expect(console.log).not.toHaveBeenCalled();
-       expect(screen.getByText("The min length is 10")).toBeInTheDocument();
-       console.log.mockRestore();
-     });
-   });
+      expect(console.log).not.toHaveBeenCalled();
+      expect(screen.getByText("The min length is 10")).toBeInTheDocument();
+      console.log.mockRestore();
+    });
+  });
 });

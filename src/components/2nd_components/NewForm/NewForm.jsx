@@ -10,12 +10,14 @@ import { useFieldArray, useForm } from "react-hook-form";
 import styles from "./NewForm.module.css";
 import NewFormInput from "./NewFormInput.jsx";
 import { useState } from "react";
+
 export default function NewForm() {
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
+
   const {
     register,
     handleSubmit,
