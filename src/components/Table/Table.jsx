@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
-import { useState, useMemo } from "react";
+import { EnhancedTableHead } from "./EnhancedTableHead";
+import styles from "./Table.module.css";
 import {
   Box,
   Paper,
@@ -9,257 +10,36 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Checkbox,
-  TableSortLabel,
 } from "@mui/material";
-
-function EnhancedTableHead({
-  numSelected,
-  order,
-  orderBy,
-  onSelectAllClick,
-  onRequestSort,
-  rowCount,
-}) {
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all items",
-            }}
-          />
-        </TableCell>
-        <TableCell
-          key="id"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "id" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "id"}
-            direction={orderBy === "id" ? order : "asc"}
-            onClick={createSortHandler("id")}
-          >
-            ID
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="title"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "title" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "title"}
-            direction={orderBy === "title" ? order : "asc"}
-            onClick={createSortHandler("title")}
-          >
-            Title
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="description"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "description" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "description"}
-            direction={orderBy === "description" ? order : "asc"}
-            onClick={createSortHandler("description")}
-          >
-            Description
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="price"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "price" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "price"}
-            direction={orderBy === "price" ? order : "asc"}
-            onClick={createSortHandler("price")}
-          >
-            Price
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="discountPercentage"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "discountPercentage" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "discountPercentage"}
-            direction={orderBy === "discountPercentage" ? order : "asc"}
-            onClick={createSortHandler("discountPercentage")}
-          >
-            Discount Percentage
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="rating"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "rating" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "rating"}
-            direction={orderBy === "rating" ? order : "asc"}
-            onClick={createSortHandler("rating")}
-          >
-            Rating
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="stock"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "stock" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "stock"}
-            direction={orderBy === "stock" ? order : "asc"}
-            onClick={createSortHandler("stock")}
-          >
-            Stock
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="brand"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "brand" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "brand"}
-            direction={orderBy === "brand" ? order : "asc"}
-            onClick={createSortHandler("brand")}
-          >
-            Brand
-          </TableSortLabel>
-        </TableCell>
-        <TableCell
-          key="category"
-          align="right"
-          padding="normal"
-          sortDirection={orderBy === "category" ? order : false}
-        >
-          <TableSortLabel
-            active={orderBy === "category"}
-            direction={orderBy === "category" ? order : "asc"}
-            onClick={createSortHandler("category")}
-          >
-            Category
-          </TableSortLabel>
-        </TableCell>
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-export function Table({ data }) {
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("title");
-  const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = data.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
-  function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-  function getComparator(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { useMemo, useState } from "react";
+import useTableLogic from "../../hooks/useTableLogic";
+import { ModalWindow } from "../ModalWindow/ModalWindow";
+export const Table = ({ data, setData, color, align, variant, onEdit }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const {
+    dataTable,
+    order,
+    orderBy,
+    selected,
+    page,
+    rowsPerPage,
+    handleRequestSort,
+    handleSelectAllClick,
+    handleClick,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    isSelected,
+    emptyRows,
+    stableSort,
+    getComparator,
+    //handleTableClick,
+  } = useTableLogic(data);
 
   const visibleRows = useMemo(
     () =>
@@ -267,17 +47,53 @@ export function Table({ data }) {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage, data]
   );
+  const openModal = (idItem) => {
+    setIsModalOpen(true);
+    setSelectedItemId(parseInt(idItem, 10));
+    return isModalOpen;
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItemId(null);
+    return isModalOpen;
+  };
+  const getSelectedInfo = () => {
+    let res = data.filter((el) => el.id === selectedItemId)[0];
+    return res;
+  };
 
+  //we perform here event delegation
+  const handleTableClick = (e) => {
+    const [typeOfAction, idItem] = e.target.id.split("__");
+    if (typeOfAction == "edit") {
+      openModal(idItem);
+      getSelectedInfo();
+    } else {
+      let idNum = parseInt(idItem, 10);
+      setData((prevData) => prevData.filter((el) => el.id !== idNum));
+    }
+  };
+  
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+    <Box className={styles.box}>
+      {isModalOpen && (
+        <ModalWindow
+          flagEdit='true'
+          onOpen={openModal}
+          onClose={closeModal}
+          infoItem={getSelectedInfo()}
+          onEdit={onEdit}
+        />
+      )}
+      <Paper className={styles.paper}>
         <TableContainer>
           <MuiTable
-            sx={{ minWidth: 750 }}
+            className={styles.table}
             aria-labelledby="tableTitle"
             size="medium"
+            onClick={(e) => handleTableClick(e)}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -295,7 +111,6 @@ export function Table({ data }) {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -305,8 +120,9 @@ export function Table({ data }) {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        color="primary"
+                        color={color}
                         checked={isItemSelected}
+                        onClick={(event) => handleClick(event, row.id)}
                         inputProps={{
                           "aria-labelledby": labelId,
                         }}
@@ -320,16 +136,34 @@ export function Table({ data }) {
                     >
                       {row.id}
                     </TableCell>
-                    <TableCell align="right">{row.title}</TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
-                    <TableCell align="right">{row.price}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align={align}>{row.title}</TableCell>
+                    <TableCell align={align}>{row.description}</TableCell>
+                    <TableCell align={align}>{row.price}</TableCell>
+                    <TableCell align={align}>
                       {row.discountPercentage}
                     </TableCell>
-                    <TableCell align="right">{row.rating}</TableCell>
-                    <TableCell align="right">{row.stock}</TableCell>
-                    <TableCell align="right">{row.brand}</TableCell>
-                    <TableCell align="right">{row.category}</TableCell>
+                    <TableCell align={align}>{row.rating}</TableCell>
+                    <TableCell align={align}>{row.stock}</TableCell>
+                    <TableCell align={align}>{row.brand}</TableCell>
+                    <TableCell align={align}>{row.category}</TableCell>
+                    <TableCell align={align}>
+                      <Button
+                        variant={variant}
+                        id={`edit__${row.id}`}
+                        startIcon={<EditIcon />}
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
+                    <TableCell align={align}>
+                      <Button
+                        variant={variant}
+                        id={`delete__${row.id}`}
+                        startIcon={<DeleteIcon />}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -357,7 +191,7 @@ export function Table({ data }) {
       </Paper>
     </Box>
   );
-}
+};
 
 Table.propTypes = {
   data: PropTypes.arrayOf(
@@ -373,6 +207,15 @@ Table.propTypes = {
       category: PropTypes.string.isRequired,
     })
   ).isRequired,
+  color: PropTypes.string,
+  align: PropTypes.string,
+  variant: PropTypes.string,
+  setData: PropTypes.func,
 };
 
+Table.defaultProps = {
+  color: "primary",
+  align: "right",
+  variant: "outlined",
+};
 export default Table;
