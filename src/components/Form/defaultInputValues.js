@@ -1,4 +1,4 @@
-{
+const DEFAULT_INPUT_VALUES = {
   "title": "",
   "description": "",
   "price": "",
@@ -8,3 +8,4 @@
   "brand": "",
   "category": ""
 }
+export default DEFAULT_INPUT_VALUES

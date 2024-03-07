@@ -26,5 +26,5 @@ ModalWindow.propTypes = {
   onClose: propTypes.bool,
   infoItem: propTypes.object,
   flagEdit: propTypes.bool,
-  onEdit: propTypes.func
+  onEdit: propTypes.func,
 };
