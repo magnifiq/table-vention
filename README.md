@@ -14,5 +14,5 @@ Currently, two official plugins are available:
 #### Run an app
 - npm run dev
 
-***Used technologies
+***Used technologies***
 React, Eslinter, Prettier, Jest, CSS, Node.js
