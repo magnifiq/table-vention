@@ -16,4 +16,5 @@ Currently, two official plugins are available:
 
 ***Used technologies***
 React, Jest, CSS, Node.js
+***
 Code conventions:  Eslint, Prettier,
