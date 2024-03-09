@@ -15,4 +15,5 @@ Currently, two official plugins are available:
 - npm run dev
 
 ***Used technologies***
-React, Eslinter, Prettier, Jest, CSS, Node.js
+React, Jest, CSS, Node.js
+Code conventions:  Eslint, Prettier,
