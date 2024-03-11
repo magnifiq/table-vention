@@ -16,5 +16,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'no-warning-comments': ['error', { terms: ['todo', 'fixme', 'error'], location: 'anywhere' }],
   },
 }

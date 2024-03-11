@@ -19,6 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useMemo, useState } from "react";
 import useTableLogic from "../../hooks/useTableLogic";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
+
 export const Table = ({ data, setData, color, align, variant, onEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -47,22 +48,18 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [order, orderBy, page, rowsPerPage, data]
   );
   const openModal = (idItem) => {
     setIsModalOpen(true);
     setSelectedItemId(parseInt(idItem, 10));
-    return isModalOpen;
   };
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItemId(null);
-    return isModalOpen;
   };
-  const getSelectedInfo = () => {
-    let res = data.filter((el) => el.id === selectedItemId)[0];
-    return res;
-  };
+  const getSelectedInfo = () => data.filter((el) => el.id === selectedItemId)[0];
 
   //we perform here event delegation
   const handleTableClick = (e) => {
@@ -71,7 +68,7 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
       openModal(idItem);
       getSelectedInfo();
     } else {
-      let idNum = parseInt(idItem, 10);
+      const idNum = parseInt(idItem, 10);
       setData((prevData) => prevData.filter((el) => el.id !== idNum));
     }
   };
@@ -81,7 +78,7 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
       {isModalOpen && (
         <ModalWindow
           flagEdit='true'
-          onOpen={openModal}
+          isOpen={isModalOpen}
           onClose={closeModal}
           infoItem={getSelectedInfo()}
           onEdit={onEdit}
@@ -93,7 +90,7 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
             className={styles.table}
             aria-labelledby="tableTitle"
             size="medium"
-            onClick={(e) => handleTableClick(e)}
+            onClick={handleTableClick}
           >
             <EnhancedTableHead
               numSelected={selected.length}
