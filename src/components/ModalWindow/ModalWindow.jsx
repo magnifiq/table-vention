@@ -3,6 +3,7 @@ import { Form } from "../Form/Form.jsx";
 import { Modal, Box } from "@mui/material";
 import useModalClose from "./hooks/useModalClose.js";
 import styles from "./ModalWindow.module.css";
+import { OperationButton } from "../OperationButton/OperationButton.jsx";
 
 export const ModalWindow = ({
   isOpen,
@@ -11,11 +12,14 @@ export const ModalWindow = ({
   flagEdit,
   onEdit,
 }) => {
-  const handleClose = useModalClose({ setIsModalOpen });
+  const { handleClose, handleCloseBtn } = useModalClose({ setIsModalOpen });
 
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Box className={styles.module}>
+        <div className={styles.btnClose} onClick={handleCloseBtn}>
+          <OperationButton text="Close" />
+        </div>
         <Form
           flagEdit={flagEdit}
           defaultInputForm={infoItem}

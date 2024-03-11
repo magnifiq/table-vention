@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 import {
   Box,
   Paper,
@@ -55,6 +55,7 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
           onEdit={onEdit}
         />
       )}
+ 
       <Paper className={styles.paper}>
         <TableContainer>
           <MuiTable
@@ -113,25 +114,25 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
 };
 
 Table.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      discountPercentage: PropTypes.number.isRequired,
-      rating: PropTypes.number.isRequired,
-      stock: PropTypes.number.isRequired,
-      brand: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
+  data: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.number.isRequired,
+      title: propTypes.string.isRequired,
+      description: propTypes.string.isRequired,
+      price: propTypes.number.isRequired,
+      discountPercentage: propTypes.number.isRequired,
+      rating: propTypes.number.isRequired,
+      stock: propTypes.number.isRequired,
+      brand: propTypes.string.isRequired,
+      category: propTypes.string.isRequired,
     })
   ).isRequired,
-  color: PropTypes.string,
-  align: PropTypes.string,
-  variant: PropTypes.string,
-  setData: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  page: PropTypes.number,
+  color: propTypes.string,
+  align: propTypes.string,
+  variant: propTypes.string,
+  setData: propTypes.func.isRequired,
+  onEdit: propTypes.func.isRequired,
+  page: propTypes.number,
 };
 
 Table.defaultProps = {

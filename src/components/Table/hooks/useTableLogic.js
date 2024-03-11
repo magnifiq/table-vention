@@ -8,7 +8,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleRequestSort = (property) => {
+  const handleRequestSort = (event,property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
