@@ -1,4 +1,4 @@
-const TABLE_COLUMNS_HEADER=[
+const TABLE_COLUMNS_HEADER = [
   { "key": "id", "label": "ID" },
   { "key": "title", "label": "Title" },
   { "key": "description", "label": "Description" },

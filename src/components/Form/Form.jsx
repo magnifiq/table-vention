@@ -1,12 +1,14 @@
-/* eslint-disable react/prop-types */
+import propTypes from "prop-types";
+
 import { OperationButton } from "../OperationButton/OperationButton";
 import { TextField, Container, Grid } from "@mui/material";
-import propTypes from "prop-types";
-import FORM_FIELDS from "./constants/formFields.js";
 import useFormLogic from "./hooks/useFormLogic.jsx";
 
+import FORM_FIELDS from "./constants/formFields.js";
+import styles from "./Form.module.css";
+
 export const Form = ({
-  flagEdit = false,
+  flagEdit,
   onSubmit,
   onEdit,
   defaultInputForm,
@@ -21,7 +23,7 @@ export const Form = ({
   };
   return (
     <Container maxWidth="sm" style={style}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.centeredForm}>
         <Grid container spacing={2}>
           {FORM_FIELDS.map((field) => (
             <Grid item xs={12} sm={6} key={field.name}>
@@ -44,8 +46,15 @@ export const Form = ({
 Form.propTypes = {
   textButton: propTypes.string.isRequired,
   defaultInputForm: propTypes.object.isRequired,
+  onSubmit: propTypes.func,
+  onEdit: propTypes.func,
+  style: propTypes.object,
+  flagEdit: propTypes.bool,
 };
 
 Form.defaultProps = {
   style: { marginTop: "20px" },
+  flagEdit: false,
+  onSubmit: () => {},
+  onEdit: () => {},
 };

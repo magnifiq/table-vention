@@ -1,6 +1,7 @@
+import propTypes from "prop-types";
 import { Form } from "../Form/Form.jsx";
 import { Modal, Box } from "@mui/material";
-import propTypes from "prop-types";
+import useModalClose from "./hooks/useModalClose.js";
 import styles from "./ModalWindow.module.css";
 
 export const ModalWindow = ({
@@ -10,14 +11,8 @@ export const ModalWindow = ({
   flagEdit,
   onEdit,
 }) => {
-  const handleClose = (e, reason) => {
-    if (reason === "backdropClick") {
-      setIsModalOpen(false);
-    }
-    else if (reason === "escapeKeyDown") {
-      setIsModalOpen(false);
-    } 
-  };
+  const handleClose = useModalClose({ setIsModalOpen });
+
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Box className={styles.module}>
@@ -33,13 +28,13 @@ export const ModalWindow = ({
 };
 
 ModalWindow.propTypes = {
-  onOpen: propTypes.bool.isRequired,
+  isOpen: propTypes.bool.isRequired,
   onClose: propTypes.bool,
-  infoItem: propTypes.object,
-  flagEdit: propTypes.bool,
-  onEdit: propTypes.func,
+  infoItem: propTypes.object.isRequired,
+  flagEdit: propTypes.bool.isRequired,
+  onEdit: propTypes.func.isRequired,
+  setIsModalOpen: propTypes.func.isRequired,
 };
-
-ModalWindow.defaultProps={
-  infoItem: {}
-}
+ModalWindow.defaultProps = {
+  onClose: false,
+};

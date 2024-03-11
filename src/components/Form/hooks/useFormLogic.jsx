@@ -46,16 +46,20 @@ const useFormLogic = (onSubmit, onEdit, defaultInputForm) => {
     if (!description) {
       errors.description = "Description is required";
     }
-    if (isNaN(parseFloat(price))) {
+  
+    if (isNaN(parseFloat(price)) || !/^\d+(\.\d+)?$/.test(price)) {
       errors.price = "Enter a valid number for price";
     }
-    if (isNaN(parseFloat(discountPercentage))) {
+    if (
+      isNaN(parseFloat(discountPercentage)) ||
+      !/^\d+(\.\d+)?$/.test(discountPercentage)
+    ) {
       errors.discount = "Enter a valid number for discount";
     }
-    if (isNaN(parseFloat(rating))) {
+    if (isNaN(parseFloat(rating)) || !/^\d+(\.\d+)?$/.test(rating)) {
       errors.rating = "Enter a valid number for rating";
     }
-    if (isNaN(parseFloat(stock))) {
+    if (isNaN(parseFloat(stock)) || !/^\d+(\.\d+)?$/.test(stock)) {
       errors.stock = "Enter a valid number for stock";
     }
     if (!brand) {

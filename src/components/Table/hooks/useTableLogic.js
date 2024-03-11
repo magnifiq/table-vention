@@ -1,21 +1,22 @@
-import { useState} from 'react';
+// useTableLogic.js
+import { useState, useMemo } from 'react';
 
-const useTableLogic = (initialData) => {
-  const data=initialData
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("title");
+const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) => {
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('title');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const handleRequestSort = (property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = data.map((n) => n.id);
+      const newSelected = initialData.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -41,7 +42,7 @@ const useTableLogic = (initialData) => {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
@@ -51,6 +52,7 @@ const useTableLogic = (initialData) => {
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
+
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -60,8 +62,9 @@ const useTableLogic = (initialData) => {
     }
     return 0;
   }
+
   function getComparator(order, orderBy) {
-    return order === "desc"
+    return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
@@ -77,12 +80,37 @@ const useTableLogic = (initialData) => {
     });
     return stabilizedThis.map((el) => el[0]);
   }
+
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-  
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - initialData.length) : 0;
+
+  const visibleRows = useMemo(
+    () =>
+      stableSort(initialData, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [order, orderBy, page, rowsPerPage, initialData]
+  );
+
+  const getSelectedInfo = (idItem) => {
+    const selectedData = initialData.filter((el) => el.id === idItem);
+    return selectedData.length > 0 ? selectedData[0] : null;
+  };
+
+  const handleTableClick = (e) => {
+    const [typeOfAction, idItem] = e.target.id.split('__');
+    if (typeOfAction === 'edit') {
+      setIsModalOpen(true);
+      setSelectedItemId(parseInt(idItem, 10));
+    } else {
+      const idNum = parseInt(idItem, 10);
+      setData((prevData) => prevData.filter((el) => el.id !== idNum));
+    }
+  };
 
   return {
-    data,
     order,
     orderBy,
     selected,
@@ -95,9 +123,10 @@ const useTableLogic = (initialData) => {
     handleChangeRowsPerPage,
     isSelected,
     emptyRows,
-    stableSort,
-    getComparator,
+    visibleRows,
+    getSelectedInfo,
+    handleTableClick
   };
-}
+};
 
-export default useTableLogic
+export default useTableLogic;

@@ -1,6 +1,5 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
-import { EnhancedTableHead } from "./Header/EnhancedTableHead";
-import styles from "./Table.module.css";
 import {
   Box,
   Paper,
@@ -10,20 +9,19 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Checkbox,
 } from "@mui/material";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { useMemo, useState } from "react";
+
 import useTableLogic from "./hooks/useTableLogic";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
+import { EnhancedTableHead } from "./Header/EnhancedTableHead";
+import BodyTable from "./Body/BodyTable";
+
+import styles from "./Table.module.css";
 
 export const Table = ({ data, setData, color, align, variant, onEdit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const {
-    dataTable,
     order,
     orderBy,
     selected,
@@ -36,47 +34,24 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
     handleChangeRowsPerPage,
     isSelected,
     emptyRows,
-    stableSort,
-    getComparator,
-    //handleTableClick,
-  } = useTableLogic(data);
-
-  const visibleRows = useMemo(
-    () =>
-      stableSort(data, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [order, orderBy, page, rowsPerPage, data]
+    visibleRows,
+    getSelectedInfo,
+    handleTableClick,
+  } = useTableLogic(
+    data,
+    setData,
+    setIsModalOpen,
+    setSelectedItemId
   );
-  const openModal = (idItem) => {
-    setIsModalOpen(true);
-    setSelectedItemId(parseInt(idItem, 10));
-  };
-  const getSelectedInfo = () =>
-    data.filter((el) => el.id === selectedItemId)[0];
-
-  //we perform here event delegation
-  const handleTableClick = (e) => {
-    const [typeOfAction, idItem] = e.target.id.split("__");
-    if (typeOfAction == "edit") {
-      openModal(idItem);
-      getSelectedInfo();
-    } else {
-      const idNum = parseInt(idItem, 10);
-      setData((prevData) => prevData.filter((el) => el.id !== idNum));
-    }
-  };
 
   return (
     <Box className={styles.box}>
       {isModalOpen && (
         <ModalWindow
-          flagEdit="true"
+          flagEdit={true}
           isOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          infoItem={getSelectedInfo()}
+          infoItem={getSelectedInfo(selectedItemId)}
           onEdit={onEdit}
         />
       )}
@@ -98,66 +73,17 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
                 return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
+                  <BodyTable
                     key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color={color}
-                        checked={isItemSelected}
-                        onClick={(event) => handleClick(event, row.id)}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.id}
-                    </TableCell>
-                    <TableCell align={align}>{row.title}</TableCell>
-                    <TableCell align={align}>{row.description}</TableCell>
-                    <TableCell align={align}>{row.price}</TableCell>
-                    <TableCell align={align}>
-                      {row.discountPercentage}
-                    </TableCell>
-                    <TableCell align={align}>{row.rating}</TableCell>
-                    <TableCell align={align}>{row.stock}</TableCell>
-                    <TableCell align={align}>{row.brand}</TableCell>
-                    <TableCell align={align}>{row.category}</TableCell>
-                    <TableCell align={align}>
-                      <Button
-                        variant={variant}
-                        id={`edit__${row.id}`}
-                        startIcon={<EditIcon />}
-                      >
-                        Edit
-                      </Button>
-                    </TableCell>
-                    <TableCell align={align}>
-                      <Button
-                        variant={variant}
-                        id={`delete__${row.id}`}
-                        startIcon={<DeleteIcon />}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                    row={row}
+                    index={index}
+                    isSelected={isSelected}
+                    handleClick={handleClick}
+                    color={color}
+                    align={align}
+                    variant={variant}
+                  ></BodyTable>
                 );
               })}
               {emptyRows > 0 && (
@@ -203,12 +129,15 @@ Table.propTypes = {
   color: PropTypes.string,
   align: PropTypes.string,
   variant: PropTypes.string,
-  setData: PropTypes.func,
+  setData: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  page: PropTypes.number,
 };
 
 Table.defaultProps = {
   color: "primary",
   align: "right",
   variant: "outlined",
+  page: 0,
 };
 export default Table;

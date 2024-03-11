@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import {
   TableCell,
   TableHead,
@@ -5,7 +6,6 @@ import {
   Checkbox,
   TableSortLabel,
 } from "@mui/material";
-import PropTypes from "prop-types";
 import TABLE_COLUMNS_HEADER from "./constants/tableColumnsHeader.js";
 
 export const EnhancedTableHead = ({
@@ -22,7 +22,6 @@ export const EnhancedTableHead = ({
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
   return (
     <TableHead>
       <TableRow>
