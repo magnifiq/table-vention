@@ -1,7 +1,6 @@
-import "./App.css";
 import { Form } from "./components/Form/Form";
 import { Table } from "./components/Table/Table";
-import DEFAULT_INPUT_VALUES from "./components/Form/defaultInputValues.js";
+import DEFAULT_INPUT_VALUES from "./constants/defaultInputValues.js";
 import useProductData from "./hooks/useProductData";
 function App() {
   const { addElement, data, setData, editElement } = useProductData();
@@ -10,7 +9,7 @@ function App() {
       <Form
         onSubmit={addElement}
         defaultInputForm={DEFAULT_INPUT_VALUES}
-        textButton="Add element"
+        textButton="Add"
       />
       <Table data={data} setData={setData} onEdit={editElement} />
     </>

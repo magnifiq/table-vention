@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
 import PropTypes from "prop-types";
-import { EnhancedTableHead } from "./EnhancedTableHead";
+import { EnhancedTableHead } from "./Header/EnhancedTableHead";
 import styles from "./Table.module.css";
 import {
   Box,
@@ -17,7 +16,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useMemo, useState } from "react";
-import useTableLogic from "../../hooks/useTableLogic";
+import useTableLogic from "./hooks/useTableLogic";
 import { ModalWindow } from "../ModalWindow/ModalWindow";
 
 export const Table = ({ data, setData, color, align, variant, onEdit }) => {
@@ -55,11 +54,8 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
     setIsModalOpen(true);
     setSelectedItemId(parseInt(idItem, 10));
   };
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedItemId(null);
-  };
-  const getSelectedInfo = () => data.filter((el) => el.id === selectedItemId)[0];
+  const getSelectedInfo = () =>
+    data.filter((el) => el.id === selectedItemId)[0];
 
   //we perform here event delegation
   const handleTableClick = (e) => {
@@ -72,14 +68,14 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
       setData((prevData) => prevData.filter((el) => el.id !== idNum));
     }
   };
-  
+
   return (
     <Box className={styles.box}>
       {isModalOpen && (
         <ModalWindow
-          flagEdit='true'
+          flagEdit="true"
           isOpen={isModalOpen}
-          onClose={closeModal}
+          setIsModalOpen={setIsModalOpen}
           infoItem={getSelectedInfo()}
           onEdit={onEdit}
         />

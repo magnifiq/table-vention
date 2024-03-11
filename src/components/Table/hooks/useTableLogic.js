@@ -7,7 +7,7 @@ const useTableLogic = (initialData) => {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
@@ -22,7 +22,7 @@ const useTableLogic = (initialData) => {
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
+  const handleClick = (id) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -41,7 +41,7 @@ const useTableLogic = (initialData) => {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 

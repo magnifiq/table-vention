@@ -2,8 +2,8 @@
 import { OperationButton } from "../OperationButton/OperationButton";
 import { TextField, Container, Grid } from "@mui/material";
 import propTypes from "prop-types";
-import FORM_FIELDS from "./formFields.js";
-import useFormLogic from "../../hooks/useFormLogic";
+import FORM_FIELDS from "./constants/formFields.js";
+import useFormLogic from "./hooks/useFormLogic.jsx";
 
 export const Form = ({
   flagEdit = false,
@@ -11,7 +11,7 @@ export const Form = ({
   onEdit,
   defaultInputForm,
   textButton,
-  style
+  style,
 }) => {
   const { inputForm, id, addFormElement, editItem, handleChange } =
     useFormLogic(onSubmit, onEdit, defaultInputForm);
@@ -42,8 +42,8 @@ export const Form = ({
 };
 
 Form.propTypes = {
-  textButton: propTypes.string,
-  defaultInputForm: propTypes.object,
+  textButton: propTypes.string.isRequired,
+  defaultInputForm: propTypes.object.isRequired,
 };
 
 Form.defaultProps = {

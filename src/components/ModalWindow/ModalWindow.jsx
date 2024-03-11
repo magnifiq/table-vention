@@ -5,13 +5,21 @@ import styles from "./ModalWindow.module.css";
 
 export const ModalWindow = ({
   isOpen,
-  onClose,
+  setIsModalOpen,
   infoItem,
   flagEdit,
   onEdit,
 }) => {
+  const handleClose = (e, reason) => {
+    if (reason === "backdropClick") {
+      setIsModalOpen(false);
+    }
+    else if (reason === "escapeKeyDown") {
+      setIsModalOpen(false);
+    } 
+  };
   return (
-    <Modal open={isOpen} onClose={onClose}>
+    <Modal open={isOpen} onClose={handleClose}>
       <Box className={styles.module}>
         <Form
           flagEdit={flagEdit}

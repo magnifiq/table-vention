@@ -11,11 +11,15 @@
     "preview": "vite preview"
   },
   "lint-staged": {
-    "*.js": ["npm run lint", "git add"]
+    "*.js": [
+      "npm run lint",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run precommit"
+    }
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
