@@ -44,7 +44,7 @@ const BodyTable = ({
         {id}
       </TableCell>
       {detailsArr.map((detail, idx) => (
-        <TableCell key={idx} align={align}>
+        <TableCell key={`${idx}-${detail.title}`} align={align}>
           {detail}
         </TableCell>
       ))}

@@ -48,7 +48,6 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
     <Box className={styles.box}>
       {isModalOpen && (
         <ModalWindow
-          flagEdit={true}
           isOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
           infoItem={getSelectedInfo(selectedItemId)}
