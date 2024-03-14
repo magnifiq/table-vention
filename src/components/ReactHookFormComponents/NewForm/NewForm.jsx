@@ -14,17 +14,12 @@ import styles from "./NewForm.module.css";
 
 export default function NewForm() {
   const [checked, setChecked] = useState(false);
-  const [numOfSubmitted, setNumOfSubmitted] = useState(0);
-  const [submittedData, setSubmittedData] = useLocalStorage("form-data", []);
+  const [submittedData, setSubmittedData] = useLocalStorage("submittedData", []);
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
   const onFormSubmit = (data) => {
-    setNumOfSubmitted((prevNum) => prevNum + 1);
-    setSubmittedData((prevData) => [
-      ...prevData,
-      { key: `form-data-${numOfSubmitted}`, data },
-    ]);
+    setSubmittedData([...submittedData, data]);
     console.log(data);
   };
   const {
