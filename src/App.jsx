@@ -1,7 +1,5 @@
 import RouterConfig from "./routes/RouterConfig.jsx";
 
-const App = () => {
-  return <RouterConfig />;
-};
+const App = () => <RouterConfig />;
 
 export default App;

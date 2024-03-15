@@ -9,22 +9,19 @@ const NewFormInput = ({
   register,
   type,
   style,
-}) => {
-  const minReq = extraValidation?.minLength;
-  return (
-    <TextField
-      style={style}
-      {...register(nameInput, {
-        required: `Put your ${label} please`,
-        minLength: minReq,
-      })}
-      fullWidth
-      label={label}
-      className={styles.formInput}
-      type={type}
-    />
-  );
-};
+}) => (
+  <TextField
+    style={style}
+    {...register(nameInput, {
+      required: `Put your ${label} please`,
+      minLength: extraValidation?.minLength,
+    })}
+    fullWidth
+    label={label}
+    className={styles.formInput}
+    type={type}
+  />
+);
 
 NewFormInput.propTypes = {
   label: propTypes.string.isRequired,
