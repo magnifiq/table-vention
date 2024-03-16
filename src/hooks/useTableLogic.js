@@ -3,7 +3,7 @@ import { useState} from 'react';
 const useTableLogic = (initialData) => {
   const data=initialData
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("title");
+ 
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
