@@ -1,7 +1,7 @@
 import { useState} from 'react';
 
 const useTableLogic = (initialData) => {
-  const data=initialData
+  
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("title");
   const [selected, setSelected] = useState([]);
