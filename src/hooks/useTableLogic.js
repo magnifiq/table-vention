@@ -10,7 +10,7 @@ const useTableLogic = (initialData) => {
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
-    
+    setOrderBy(property);
   };
 
   const handleSelectAllClick = (event) => {
