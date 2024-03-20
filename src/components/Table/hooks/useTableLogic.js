@@ -1,4 +1,3 @@
-// useTableLogic.js
 import { useState, useMemo } from 'react';
 import { DIRERECTION_ASC, DIRERECTION_DESC } from '../constants/directions';
 
@@ -8,7 +7,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  
   const handleRequestSort = (event,property) => {
     const isAsc = orderBy === property && order === DIRERECTION_ASC;
     setOrder(isAsc ? DIRERECTION_DESC : DIRERECTION_ASC);
@@ -110,7 +109,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
     } else {
       setData(prevData => prevData.filter(el => el.id !== idNum));
     }
-    
+
   };
   return {
     order,
