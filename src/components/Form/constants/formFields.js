@@ -1,4 +1,4 @@
-const FORM_FIELDS=[
+const FORM_FIELDS = [
   { "label": "Title", "name": "title" },
   { "label": "Description", "name": "description" },
   { "label": "Price", "name": "price" },

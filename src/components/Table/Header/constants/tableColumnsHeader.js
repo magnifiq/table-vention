@@ -1,4 +1,4 @@
-const COLUMNS=[
+const TABLE_COLUMNS_HEADER = [
   { "key": "id", "label": "ID" },
   { "key": "title", "label": "Title" },
   { "key": "description", "label": "Description" },
@@ -9,4 +9,4 @@ const COLUMNS=[
   { "key": "brand", "label": "Brand" },
   { "key": "category", "label": "Category" }
 ]
-export default COLUMNS
+export default TABLE_COLUMNS_HEADER

@@ -1,30 +1,45 @@
-import {Form} from "../Form/Form.jsx"
-import {Modal, Box} from '@mui/material'
 import propTypes from "prop-types";
-import styles from "./ModalWindow.module.css"
+import { Form } from "../Form/Form.jsx";
+import { Modal, Box } from "@mui/material";
+import useModalClose from "./hooks/useModalClose.js";
+import styles from "./ModalWindow.module.css";
+import { OperationButton } from "../OperationButton/OperationButton.jsx";
 
+export const ModalWindow = ({
+  isOpen,
+  setIsModalOpen,
+  infoItem,
+  flagEdit,
+  onEdit,
+}) => {
+  const { handleClose, handleCloseBtn } = useModalClose({ setIsModalOpen });
 
-
-export const ModalWindow=({onOpen, onClose, infoItem, flagEdit, onEdit})=>{
-  
-    return (
-      <Modal open={onOpen} onClose={onClose}>
-        <Box className={styles.module}>
-          <Form
-            flagEdit={flagEdit}
-            defaultInputForm={infoItem}
-            textButton="Edit element"
-            onEdit={onEdit}
-          />
-        </Box>
-      </Modal>
-    );
-}
+  return (
+    <Modal open={isOpen} onClose={handleClose}>
+      <Box className={styles.module}>
+        <div className={styles.btnClose} onClick={handleCloseBtn}>
+          <OperationButton text="Close" />
+        </div>
+        <Form
+          flagEdit={flagEdit}
+          defaultInputForm={infoItem}
+          textButton="Edit"
+          onEdit={onEdit}
+        />
+      </Box>
+    </Modal>
+  );
+};
 
 ModalWindow.propTypes = {
-  onOpen: propTypes.bool,
+  isOpen: propTypes.bool.isRequired,
   onClose: propTypes.bool,
-  infoItem: propTypes.object,
-  flagEdit: propTypes.bool,
-  onEdit: propTypes.func,
+  infoItem: propTypes.object.isRequired,
+  flagEdit: propTypes.bool.isRequired,
+  onEdit: propTypes.func.isRequired,
+  setIsModalOpen: propTypes.func.isRequired,
+};
+ModalWindow.defaultProps = {
+  onClose: false,
+  flagEdit: true,
 };

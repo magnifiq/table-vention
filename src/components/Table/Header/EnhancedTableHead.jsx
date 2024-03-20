@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import {
   TableCell,
   TableHead,
@@ -5,10 +6,9 @@ import {
   Checkbox,
   TableSortLabel,
 } from "@mui/material";
-import PropTypes from "prop-types";
-import COLUMNS from "./tableHeadData.js"
+import TABLE_COLUMNS_HEADER from "./constants/tableColumnsHeader.js";
 
-export const EnhancedTableHead=({
+export const EnhancedTableHead = ({
   numSelected,
   order,
   orderBy,
@@ -17,12 +17,11 @@ export const EnhancedTableHead=({
   rowCount,
   color,
   padding,
-  align
-}) =>{
+  align,
+}) => {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
   return (
     <TableHead>
       <TableRow>
@@ -38,7 +37,7 @@ export const EnhancedTableHead=({
           />
         </TableCell>
 
-        {COLUMNS.map((column) => (
+        {TABLE_COLUMNS_HEADER.map((column) => (
           <TableCell
             key={column.key}
             align={align}
@@ -65,7 +64,7 @@ export const EnhancedTableHead=({
       </TableRow>
     </TableHead>
   );
-}
+};
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
@@ -76,11 +75,11 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
   color: PropTypes.string,
   padding: PropTypes.string,
-  align: PropTypes.string
+  align: PropTypes.string,
 };
 
-EnhancedTableHead.defaultProps={
-    color: "primary",
-    align: "right",
-    padding: "normal"
-}
+EnhancedTableHead.defaultProps = {
+  color: "primary",
+  align: "right",
+  padding: "normal",
+};
