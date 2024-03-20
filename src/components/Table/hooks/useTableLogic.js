@@ -1,16 +1,17 @@
 // useTableLogic.js
 import { useState, useMemo } from 'react';
+import { DIRERECTION_ASC, DIRERECTION_DESC } from '../constants/directions';
 
 const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) => {
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState(DIRERECTION_ASC);
   const [orderBy, setOrderBy] = useState('title');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event,property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === DIRERECTION_ASC;
+    setOrder(isAsc ? DIRERECTION_DESC : DIRERECTION_ASC);
     setOrderBy(property);
   };
 
@@ -64,7 +65,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) 
   }
 
   function getComparator(order, orderBy) {
-    return order === 'desc'
+    return order === DIRERECTION_DESC
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
