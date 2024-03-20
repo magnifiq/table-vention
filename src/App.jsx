@@ -9,7 +9,7 @@ function App() {
     <>
       <Form
         onSubmit={addElement}
-        
+        defaultInputForm={DEFAULT_INPUT_VALUES}
         textButton="Add element"
       />
       <Table data={data} setData={setData} onEdit={editElement} />
