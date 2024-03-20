@@ -18,7 +18,6 @@ const BodyTable = ({
     thumbnail,
     ...details
   } = row;
-  console.log(details)
   const detailsArr = Object.values(details);
   const isItemSelected = isSelected(id);
   const labelId = `enhanced-table-checkbox-${index}`;

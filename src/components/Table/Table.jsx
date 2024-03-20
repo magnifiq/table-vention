@@ -18,7 +18,7 @@ import BodyTable from "./Body/BodyTable";
 
 import styles from "./Table.module.css";
 
-export const Table = ({ data, setData, color, align, variant, onEdit }) => {
+export const Table = ({ data, setData, color, align, variant, onEdit, initOrderBy }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const {
@@ -41,7 +41,8 @@ export const Table = ({ data, setData, color, align, variant, onEdit }) => {
     data,
     setData,
     setIsModalOpen,
-    setSelectedItemId
+    setSelectedItemId,
+    initOrderBy
   );
 
   return (
@@ -139,5 +140,6 @@ Table.defaultProps = {
   align: "right",
   variant: "outlined",
   page: 0,
+  initOrderBy: 'title'
 };
 export default Table;
