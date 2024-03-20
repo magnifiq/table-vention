@@ -41,4 +41,5 @@ ModalWindow.propTypes = {
 };
 ModalWindow.defaultProps = {
   onClose: false,
+  flagEdit: true,
 };

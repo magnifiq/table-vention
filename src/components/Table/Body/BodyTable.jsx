@@ -14,15 +14,12 @@ const BodyTable = ({
 }) => {
   const {
     id,
-    title,
-    description,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    brand,
-    category,
+    images,
+    thumbnail,
+    ...details
   } = row;
+  console.log(details)
+  const detailsArr = Object.values(details);
   const isItemSelected = isSelected(id);
   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -49,14 +46,11 @@ const BodyTable = ({
       <TableCell component="th" id={labelId} scope="row" padding="none">
         {id}
       </TableCell>
-      <TableCell align={align}>{title}</TableCell>
-      <TableCell align={align}>{description}</TableCell>
-      <TableCell align={align}>{price}</TableCell>
-      <TableCell align={align}>{discountPercentage}</TableCell>
-      <TableCell align={align}>{rating}</TableCell>
-      <TableCell align={align}>{stock}</TableCell>
-      <TableCell align={align}>{brand}</TableCell>
-      <TableCell align={align}>{category}</TableCell>
+      {detailsArr.map((detail, idx) => (
+        <TableCell key={`${idx}-${detail.title}`} align={align}>
+          {detail}
+        </TableCell>
+      ))}
       <TableCell align={align}>
         <Button variant={variant} id={`edit__${id}`} startIcon={<EditIcon />}>
           Edit
@@ -104,5 +98,5 @@ BodyTable.defaultProps = {
   stock: 0,
   brand: "",
   category: "",
-}
+};
 export default BodyTable;
