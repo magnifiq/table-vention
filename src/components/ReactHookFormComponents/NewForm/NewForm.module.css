@@ -1,0 +1,20 @@
+.form__input .header__bottom {
+  margin-bottom: 10px;
+}
+.error__input {
+  color: red;
+}
+
+.btn__remove__grid {
+  margin-bottom: 10px;
+  text-align: right;
+}
+.btn__append__grid {
+  margin-right: 10px;
+}
+
+.header_upper {
+  margin-top: 10px;
+  text-align: left;
+  width: 100%;
+}
