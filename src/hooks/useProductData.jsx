@@ -1,20 +1,8 @@
-import { defer } from "react-router-dom";
 import { useState } from "react";
-
-const fetchData = async () => {
-  const response = await fetch("https://dummyjson.com/products");
-  return response.json();
-};
-
-const productLoader = async () => {
-  return defer({
-    products: fetchData(),
-  });
-};
 
 const useProductData = ({ products }) => {
   const [data, setData] = useState(products);
-  console.log(products);
+ 
   const addElement = (item) => {
     const {
       title,
@@ -51,4 +39,4 @@ const useProductData = ({ products }) => {
   return { addElement, setData, editElement };
 };
 
-export { useProductData, productLoader };
+export { useProductData};

@@ -18,7 +18,15 @@ import BodyTable from "./Body/BodyTable";
 
 import styles from "./Table.module.css";
 
-export const Table = ({ data, setData, color, align, variant, onEdit, initOrderBy }) => {
+export const Table = ({
+  data,
+  setData,
+  color,
+  align,
+  variant,
+  onEdit,
+  initOrderBy,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const {
@@ -55,7 +63,7 @@ export const Table = ({ data, setData, color, align, variant, onEdit, initOrderB
           onEdit={onEdit}
         />
       )}
- 
+
       <Paper className={styles.paper}>
         <TableContainer>
           <MuiTable
@@ -133,6 +141,7 @@ Table.propTypes = {
   setData: propTypes.func.isRequired,
   onEdit: propTypes.func.isRequired,
   page: propTypes.number,
+  initOrderBy: propTypes.string,
 };
 
 Table.defaultProps = {
@@ -140,6 +149,6 @@ Table.defaultProps = {
   align: "right",
   variant: "outlined",
   page: 0,
-  initOrderBy: 'title'
+  initOrderBy: "title",
 };
 export default Table;

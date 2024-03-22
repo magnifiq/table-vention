@@ -8,8 +8,9 @@ import { Table } from "../../components/Table/Table.jsx";
 import { useProductData } from "../../hooks/useProductData.jsx";
 
 const FirstTaskPageContent = ({ products }) => {
-  const { addElement, setData, editElement } = useProductData(products);
-
+  const { addElement, setData, editElement } = useProductData(products); // it isn't decompose yet
+  const data=products.products;
+  
   return (
     <>
       <Form
@@ -17,13 +18,17 @@ const FirstTaskPageContent = ({ products }) => {
         defaultInputForm={DEFAULT_INPUT_VALUES}
         textButton="Add"
       />
-      <Table data={products} setData={setData} onEdit={editElement} />
+      <Table data={data} setData={setData} onEdit={editElement} />
     </>
   );
 };
 
 FirstTaskPageContent.propTypes = {
-  products: PropTypes.array.isRequired,
+  products: PropTypes.object,
+};
+
+FirstTaskPageContent.defaultProps = {
+  products: {},
 };
 
 export default FirstTaskPageContent;

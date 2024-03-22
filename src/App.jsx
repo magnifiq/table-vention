@@ -10,7 +10,7 @@ import ErrorPage from "./pages/ErrorPage";
 import NewFormPage from "./pages/NewFormPage";
 
 import Layout from "./components/Layout/Layout";
-import { productLoader } from "./hooks/useProductData";
+import productLoader from "../services/productLoader.js";
 
 const router = createBrowserRouter(
   createRoutesFromChildren(

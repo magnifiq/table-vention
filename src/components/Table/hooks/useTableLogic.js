@@ -7,7 +7,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  
+
   const handleRequestSort = (event,property) => {
     const isAsc = orderBy === property && order === DIRERECTION_ASC;
     setOrder(isAsc ? DIRERECTION_DESC : DIRERECTION_ASC);
@@ -102,12 +102,14 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
   const handleTableClick = ({ target: { id } }) => {
     const [typeOfAction, idItem] = id.split('__');
     const idNum = parseInt(idItem, 10);
-
+    
     if (typeOfAction === 'edit') {
       setIsModalOpen(true);
       setSelectedItemId(idNum);
     } else {
-      setData(prevData => prevData.filter(el => el.id !== idNum));
+      setData(prevData => {
+        console.log("Previous Data:", prevData);
+        return prevData.filter(el => el.id !== idNum)});
     }
 
   };
