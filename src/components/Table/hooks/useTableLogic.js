@@ -107,9 +107,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
       setIsModalOpen(true);
       setSelectedItemId(idNum);
     } else {
-      setData(prevData => {
-        console.log("Previous Data:", prevData);
-        return prevData.filter(el => el.id !== idNum)});
+      setData(prevData =>(prevData.filter(el => el.id !== idNum));
     }
 
   };
