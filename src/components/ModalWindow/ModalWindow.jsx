@@ -1,5 +1,5 @@
 import {Form} from "../Form/Form.jsx"
-
+import {Modal, Box} from '@mui/material'
 import propTypes from "prop-types";
 import styles from "./ModalWindow.module.css"
 
