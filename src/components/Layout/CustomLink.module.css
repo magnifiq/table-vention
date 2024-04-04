@@ -1,9 +1,9 @@
 .active{
     color: royalblue;
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .inactive{
-    color: black;
+    color: royalblue;
     text-decoration: none;
 }

@@ -5,6 +5,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+import { ThemeProvider } from "./context/Theme/ThemeContext.jsx";
+
 import FirstTaskPage from "./pages/FirstTaskPage/FirstTaskPage";
 import ErrorPage from "./pages/ErrorPage";
 import NewFormPage from "./pages/NewFormPage";
@@ -22,6 +24,12 @@ const router = createBrowserRouter(
   )
 );
 
-const App = () => <RouterProvider router={router} />;
+const App = () => {
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
+};
 
 export default App;
