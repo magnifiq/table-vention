@@ -11,10 +11,10 @@ import { useProductData } from "../../hooks/useProductData.jsx";
 
 const FirstTaskPageContent = ({ products }) => {
   const { addElement, setData, editElement } = useProductData(products); // it isn't decompose yet
-  const data=products.products;
-  
+  const data = products.products;
+
   return (
-    <Paper style={{height: "100%"}}>
+    <Paper style={{ height: "100%" }}>
       <Form
         onSubmit={addElement}
         defaultInputForm={DEFAULT_INPUT_VALUES}

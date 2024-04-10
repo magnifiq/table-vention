@@ -1,36 +1,41 @@
-import { useContext } from "react";
+import propTypes from "prop-types";
 
 import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
+import { Box, Paper } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7OutlinedIcon from "@mui/icons-material/Brightness7Outlined";
 
-import { ThemeContext } from "./ThemeContext";
+import useThemeStoreSelectors from "../../stores/useThemeStore";
 
-const ToggleColorTheme = () => {
-  const { toggleTheme, muiTheme } = useContext(ThemeContext);
-
+const ToggleColorTheme = ({ toggleTheme }) => {
+  const theme = useThemeStoreSelectors.use.theme();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "absolute",
-        top: 10,
-        right: 10,
-      }}
-    >
-      <IconButton onClick={toggleTheme} color="inherit">
-        {muiTheme.palette.mode === "dark" ? (
-          <Brightness7OutlinedIcon />
-        ) : (
-          <Brightness4Icon />
-        )}
-      </IconButton>
-    </Box>
+    <Paper>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "absolute",
+          top: 10,
+          right: 10,
+        }}
+      >
+        <IconButton onClick={toggleTheme} color="inherit">
+          {theme === "dark" ? (
+            <Brightness7OutlinedIcon color="primary" />
+          ) : (
+            <Brightness4Icon />
+          )}
+        </IconButton>
+      </Box>
+    </Paper>
   );
+};
+
+ToggleColorTheme.propTypes = {
+  toggleTheme: propTypes.func.isRequired,
 };
 
 export default ToggleColorTheme;
