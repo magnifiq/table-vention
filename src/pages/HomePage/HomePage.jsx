@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 
-import { TextField, Container, Grid, Paper, Link } from "@mui/material";
+import { TextField, Box, Grid, Paper, Link } from "@mui/material";
 
 import CustomButton from "../../components/CustomButton/CustomButton";
 
@@ -24,8 +24,8 @@ const HomePage = () => {
   }
 
   return (
-    <Paper>
-      <Container maxWidth="sm">
+    <Paper sx={{ padding: 2 }}>
+      <Box display="flex" justifyContent="center">
         <form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -55,11 +55,13 @@ const HomePage = () => {
             <CustomButton type="button" text="Sign In" onClick={handleSignIn} />
           )}
         </form>
-      </Container>
-      {isSignUpActive && <Link onClick={handleMethodChange}>Login</Link>}
-      {!isSignUpActive && (
-        <Link onClick={handleMethodChange}>Create an account</Link>
-      )}
+      </Box>
+      <Box textAlign="center" mt={2}>
+        {isSignUpActive && <Link onClick={handleMethodChange}>Login</Link>}
+        {!isSignUpActive && (
+          <Link onClick={handleMethodChange}>Create an account</Link>
+        )}
+      </Box>
     </Paper>
   );
 };

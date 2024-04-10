@@ -15,7 +15,7 @@ import NewFormPage from "./pages/NewFormPage";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 
 import Layout from "./components/Layout/Layout";
-import productLoader from "../services/productLoader.js";
+import productLoader from "./services/productLoader.js";
 
 import useAuthStoreSelectors from "./stores/useAuthStore";
 

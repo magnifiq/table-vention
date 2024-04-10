@@ -22,7 +22,7 @@ const Layout = () => {
   };
   return (
     <Paper>
-      <Paper>
+   
         <Grid container direction="column" spacing={2}>
           <Grid item>
             <CustomLink to="/first_task">Go to the first task</CustomLink>
@@ -40,7 +40,7 @@ const Layout = () => {
             )}
           </Grid>
         </Grid>
-      </Paper>
+     
 
       <Outlet />
     </Paper>

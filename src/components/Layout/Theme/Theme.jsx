@@ -4,7 +4,7 @@ import {
   ThemeProvider as MuiThemeProvider,
   createTheme,
 } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline, Paper } from "@mui/material";
 
 import ToggleColorTheme from "./ToggleColorTheme";
 
@@ -24,7 +24,11 @@ export const Theme = ({ children }) => {
     <>
       <CssBaseline />
       <ToggleColorTheme toggleTheme={toggleTheme} />
-      <MuiThemeProvider theme={muiTheme}>{children}</MuiThemeProvider>
+      <MuiThemeProvider theme={muiTheme}>
+        <Paper sx={{ height: "100vh" }} >
+          {children}
+        </Paper>
+      </MuiThemeProvider>
     </>
   );
 };
