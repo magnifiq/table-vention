@@ -9,13 +9,15 @@ Currently, two official plugins are available:
 ## The second stage is practice of React Hook Form + unit tests
 ## The third stage is the implementation of dark theme and auth in Firebase with Context Provider(first version)/ with state managment library Zustand(second version)
 **Necessary commands**
-#### Install dependencies
+##### Install dependencies
 - npm install
-#### Run an app
+##### Run an app
 - npm run dev
+
 **Login example**
 email: a@gmail.com
 password: 111111
+
 ***Used technologies***
 React, Jest, CSS, Zustand, MaterialUI
 ***
