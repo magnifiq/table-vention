@@ -12,7 +12,7 @@ export const ModalWindow=({onOpen, onClose, infoItem, flagEdit, onEdit})=>{
         <Box className={styles.module}>
           <Form
             flagEdit={flagEdit}
-           
+            defaultInputForm={infoItem}
             textButton="Edit element"
             onEdit={onEdit}
           />
