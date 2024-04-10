@@ -15,6 +15,7 @@ Currently, two official plugins are available:
 - npm run dev
 
 **Login example**
+
 email: a@gmail.com
 password: 111111
 
