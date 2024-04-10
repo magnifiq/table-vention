@@ -8,9 +8,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import ToggleColorTheme from "./ToggleColorTheme";
 
-import useThemeStoreSelectors from "../../stores/useThemeStore";
+import useThemeStoreSelectors from "../../../stores/useThemeStore";
 
-export const ThemeProvider = ({ children }) => {
+export const Theme = ({ children }) => {
   const theme = useThemeStoreSelectors.use.theme();
   const toggleTheme = useThemeStoreSelectors.use.toggleTheme();
 
@@ -23,12 +23,12 @@ export const ThemeProvider = ({ children }) => {
   return (
     <>
       <CssBaseline />
-      <ToggleColorTheme toggleTheme={toggleTheme}/>
+      <ToggleColorTheme toggleTheme={toggleTheme} />
       <MuiThemeProvider theme={muiTheme}>{children}</MuiThemeProvider>
     </>
   );
 };
 
-ThemeProvider.propTypes = {
+Theme.propTypes = {
   children: PropTypes.node.isRequired,
 };

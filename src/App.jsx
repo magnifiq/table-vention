@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import {
   createBrowserRouter,
   createRoutesFromChildren,
@@ -5,16 +7,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { ThemeProvider } from "./context/Theme/ThemeContext.jsx";
-import { AuthProvider } from "./context/Auth/AuthContext.jsx";
+import { Theme } from "./components/Layout/Theme/Theme.jsx";
 
 import FirstTaskPage from "./pages/FirstTaskPage/FirstTaskPage";
 import ErrorPage from "./pages/ErrorPage";
 import NewFormPage from "./pages/NewFormPage";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/HomePage/HomePage.jsx";
 
 import Layout from "./components/Layout/Layout";
 import productLoader from "../services/productLoader.js";
+
+import useAuthStoreSelectors from "./stores/useAuthStore";
 
 const router = createBrowserRouter(
   createRoutesFromChildren(
@@ -32,12 +35,19 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
+  const isFetching = useAuthStoreSelectors.use.isFetching();
+  const initializeAuth = useAuthStoreSelectors.use.initialize();
+
+  useEffect(() => {
+    initializeAuth();
+  }, []);
+
+  if (isFetching) return <h2>Loading...</h2>;
+
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </ThemeProvider>
+    <Theme>
+      <RouterProvider router={router} />
+    </Theme>
   );
 };
 

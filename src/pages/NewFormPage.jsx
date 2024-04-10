@@ -1,10 +1,11 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 import NewForm from "../components/ReactHookFormComponents/NewForm/NewForm.jsx";
-import { AuthContext } from "../context/Auth/AuthContext.jsx";
+
+import useAuthStoreSelectors from "../stores/useAuthStore.js";
+
 const NewFormPage = () => {
-  const user = useContext(AuthContext).user;
+  const user = useAuthStoreSelectors.use.user();
 
   if (!user) return <Navigate to="/" />;
   return <NewForm />;

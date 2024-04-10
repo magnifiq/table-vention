@@ -1,15 +1,16 @@
 import { useLoaderData, Await } from "react-router-dom";
-import { Suspense, useContext } from "react";
+import { Suspense } from "react";
 
 import FirstTaskPageContent from "./FirstTaskPageContent";
 
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../../context/Auth/AuthContext.jsx";
+
+import useAuthStoreSelectors from "../../stores/useAuthStore";
 
 const FirstTaskPage = () => {
   const { products } = useLoaderData();
 
-  const user = useContext(AuthContext).user;
+  const user = useAuthStoreSelectors.use.user();
   
   if (!user) return <Navigate to="/" />;
   

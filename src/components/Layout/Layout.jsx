@@ -1,5 +1,3 @@
-import { useContext } from "react";
-
 import { Grid, Paper } from "@mui/material";
 
 import { signOut } from "firebase/auth";
@@ -7,12 +5,12 @@ import { auth } from "../../firebase";
 
 import { Outlet } from "react-router-dom";
 
-import { AuthContext } from "../../context/Auth/AuthContext";
-
 import CustomLink from "./CustomLink";
 
+import useAuthStoreSelectors from "../../stores/useAuthStore";
+
 const Layout = () => {
-  const user = useContext(AuthContext).user;
+  const user = useAuthStoreSelectors.use.user;
   const handleSignOut = () => {
     signOut(auth)
       .catch((error) => console.error(error));
