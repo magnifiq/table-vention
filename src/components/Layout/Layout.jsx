@@ -10,9 +10,14 @@ import CustomLink from "./CustomLink";
 import useAuthStoreSelectors from "../../stores/useAuthStore";
 
 const Layout = () => {
-  const user = useAuthStoreSelectors.use.user;
+  const user = useAuthStoreSelectors.use.user();
+  const resetState = useAuthStoreSelectors.use.resetState();
+
   const handleSignOut = () => {
     signOut(auth)
+      .then(() => {
+        resetState();
+      })
       .catch((error) => console.error(error));
   };
   return (
@@ -25,7 +30,7 @@ const Layout = () => {
           <Grid item>
             <CustomLink to="/second_task">Go to the second task</CustomLink>
           </Grid>
-          <Grid item style={{marginBottom:"10px"}}>
+          <Grid item style={{ marginBottom: "10px" }}>
             {user ? (
               <CustomLink onClick={handleSignOut} to="/">
                 Logout

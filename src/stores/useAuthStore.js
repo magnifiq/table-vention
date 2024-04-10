@@ -15,6 +15,9 @@ export const useAuthStore = create((set) => ({
             set({ user, isFetching: false });
         });
         return unsubscribe;
+    },
+    resetState: () => {
+        set({ user: null, isFetching: true });
     }
 }))
 
