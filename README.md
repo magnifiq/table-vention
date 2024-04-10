@@ -18,8 +18,9 @@ Currently, two official plugins are available:
 
 email: a@gmail.com
 password: 111111
-
-***Used technologies***
-React, Jest, CSS, Zustand, MaterialUI
 ***
+***Used technologies***
+
+React, Jest, CSS, Zustand, MaterialUI
+
 Code conventions:  Eslint, Prettier
