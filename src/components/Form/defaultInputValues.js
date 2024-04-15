@@ -1,5 +1,5 @@
 const DEFAULT_INPUT_VALUES = {
-  
+  "title": "",
   "description": "",
   "price": "",
   "discountPercentage": "",
