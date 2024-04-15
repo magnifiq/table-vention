@@ -8,3 +8,4 @@ const DEFAULT_INPUT_VALUES = {
   "brand": "",
   "category": ""
 }
+export default DEFAULT_INPUT_VALUES
