@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import NewForm from "../components/ReactHookFormComponents/NewForm/NewForm";
+import NewForm from "../NewForm/NewForm";
 
 describe("Dynamic fields in a new form", () => {
   describe("with addition/removal of dynamic fields", () => {

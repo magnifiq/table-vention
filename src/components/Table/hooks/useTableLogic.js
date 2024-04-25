@@ -1,16 +1,16 @@
-// useTableLogic.js
 import { useState, useMemo } from 'react';
+import { DIRERECTION_ASC, DIRERECTION_DESC } from '../constants/directions';
 
-const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) => {
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('title');
+const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, initOrderBy) => {
+  const [order, setOrder] = useState(DIRERECTION_ASC);
+  const [orderBy, setOrderBy] = useState(initOrderBy);
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event,property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === DIRERECTION_ASC;
+    setOrder(isAsc ? DIRERECTION_DESC : DIRERECTION_ASC);
     setOrderBy(property);
   };
 
@@ -64,7 +64,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) 
   }
 
   function getComparator(order, orderBy) {
-    return order === 'desc'
+    return order === DIRERECTION_DESC
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
@@ -99,17 +99,18 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId) 
     return selectedData.length > 0 ? selectedData[0] : null;
   };
 
-  const handleTableClick = (e) => {
-    const [typeOfAction, idItem] = e.target.id.split('__');
+  const handleTableClick = ({ target: { id } }) => {
+    const [typeOfAction, idItem] = id.split('__');
+    const idNum = parseInt(idItem, 10);
+    
     if (typeOfAction === 'edit') {
       setIsModalOpen(true);
-      setSelectedItemId(parseInt(idItem, 10));
+      setSelectedItemId(idNum);
     } else {
-      const idNum = parseInt(idItem, 10);
-      setData((prevData) => prevData.filter((el) => el.id !== idNum));
+      setData(prevData =>(prevData.filter(el => el.id !== idNum)));
     }
-  };
 
+  };
   return {
     order,
     orderBy,

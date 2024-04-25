@@ -1,22 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const useProductData = () => {
-  const [data, setData] = useState([]);
-  const fetchData = async () => {
-    try {
-      const response = await fetch("https://dummyjson.com/products");
-      const { products } = await response.json();
-      setData(products);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+const useProductData = ({ products }) => {
+  const [data, setData] = useState(products);
+ 
   const addElement = (item) => {
-    console.log(item);
     const {
       title,
       description,
@@ -49,7 +36,7 @@ const useProductData = () => {
     setData(newArr);
   };
 
-  return { addElement, data, setData, editElement };
+  return { addElement, setData, editElement };
 };
 
-export default useProductData;
+export { useProductData};

@@ -12,11 +12,13 @@ const BodyTable = ({
   align,
   variant,
 }) => {
-  const {
+ const {
     id,
+    images,
+    thumbnail,
     ...details
   } = row;
-  const detailsArr=Object.values(details);
+  const detailsArr = Object.values(details);
   const isItemSelected = isSelected(id);
   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -95,5 +97,5 @@ BodyTable.defaultProps = {
   stock: 0,
   brand: "",
   category: "",
-}
+};
 export default BodyTable;

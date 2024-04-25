@@ -1,7 +1,8 @@
 import propTypes from "prop-types";
 
 import { OperationButton } from "../OperationButton/OperationButton";
-import { TextField, Container, Grid } from "@mui/material";
+import { TextField, Container, Grid, Paper } from "@mui/material";
+
 import useFormLogic from "./hooks/useFormLogic.jsx";
 
 import FORM_FIELDS from "./constants/formFields.js";
@@ -22,24 +23,26 @@ export const Form = ({
     flagEdit ? editItem(id, e) : addFormElement(e);
   };
   return (
-    <Container maxWidth="sm" style={style}>
-      <form onSubmit={handleSubmit} className={styles.centeredForm}>
-        <Grid container spacing={2}>
-          {FORM_FIELDS.map((field) => (
-            <Grid item xs={12} sm={6} key={field.name}>
-              <TextField
-                fullWidth
-                label={field.label}
-                name={field.name}
-                value={inputForm[field.name]}
-                onChange={(e) => handleChange(e, field.name)}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <OperationButton type="submit" text={textButton} />
-      </form>
-    </Container>
+    <Paper>
+      <Container maxWidth="sm" style={style}>
+        <form onSubmit={handleSubmit} className={styles.centeredForm}>
+          <Grid container spacing={2}>
+            {FORM_FIELDS.map((field) => (
+              <Grid item xs={12} sm={6} key={field.name}>
+                <TextField
+                  fullWidth
+                  label={field.label}
+                  name={field.name}
+                  value={inputForm[field.name]}
+                  onChange={(e) => handleChange(e, field.name)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <OperationButton type="submit" text={textButton} />
+        </form>
+      </Container>
+    </Paper>
   );
 };
 
