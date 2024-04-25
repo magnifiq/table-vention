@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { DIRERECTION_ASC, DIRERECTION_DESC } from '../constants/directions';
 
 const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, initOrderBy) => {
@@ -53,7 +53,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  function descendingComparator(a, b, orderBy) {
+  const descendingComparator=useCallback((a, b, orderBy)=> {
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -61,15 +61,15 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
       return 1;
     }
     return 0;
-  }
+  }, [])
 
-  function getComparator(order, orderBy) {
+  const getComparator = useCallback((order, orderBy) => {
     return order === DIRERECTION_DESC
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
-  }
+  }, [descendingComparator]);
 
-  function stableSort(array, comparator) {
+  const stableSort = useCallback((array, comparator) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
       const order = comparator(a[0], b[0]);
@@ -79,7 +79,8 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
       return a[1] - b[1];
     });
     return stabilizedThis.map((el) => el[0]);
-  }
+  }, []);
+
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - initialData.length) : 0;
@@ -91,7 +92,7 @@ const useTableLogic = (initialData, setData, setIsModalOpen, setSelectedItemId, 
         page * rowsPerPage + rowsPerPage
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [order, orderBy, page, rowsPerPage, initialData]
+    [order, orderBy, page, rowsPerPage, initialData, stableSort, getComparator]
   );
 
   const getSelectedInfo = (idItem) => {

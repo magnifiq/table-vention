@@ -21,26 +21,24 @@ const Layout = () => {
       .catch((error) => console.error(error));
   };
   return (
-    <Paper>
-   
-        <Grid container direction="column" spacing={2}>
-          <Grid item>
-            <CustomLink to="/first_task">Go to the first task</CustomLink>
-          </Grid>
-          <Grid item>
-            <CustomLink to="/second_task">Go to the second task</CustomLink>
-          </Grid>
-          <Grid item style={{ marginBottom: "10px" }}>
-            {user ? (
-              <CustomLink onClick={handleSignOut} to="/">
-                Logout
-              </CustomLink>
-            ) : (
-              <CustomLink to="/">Go to home</CustomLink>
-            )}
-          </Grid>
+    <Paper style={{ padding: "15px" }}>
+      <Grid container direction="column" spacing={2}>
+        <Grid item>
+          <CustomLink to="/first_task">Go to the first task</CustomLink>
         </Grid>
-     
+        <Grid item>
+          <CustomLink to="/second_task">Go to the second task</CustomLink>
+        </Grid>
+        <Grid item style={{ marginBottom: "10px" }}>
+          {user ? (
+            <CustomLink onClick={handleSignOut} to="/">
+              Logout
+            </CustomLink>
+          ) : (
+            <CustomLink to="/">Go to home</CustomLink>
+          )}
+        </Grid>
+      </Grid>
 
       <Outlet />
     </Paper>
