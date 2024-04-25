@@ -12,7 +12,7 @@ const BodyTable = ({
   align,
   variant,
 }) => {
-  const {
+ const {
     id,
     images,
     thumbnail,
