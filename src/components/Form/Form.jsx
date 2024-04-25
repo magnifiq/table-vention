@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 
-import { OperationButton } from "../OperationButton/OperationButton";
+import CustomButton from "../CustomButton/CustomButton.jsx";
 import { TextField, Container, Grid, Paper } from "@mui/material";
 
 import useFormLogic from "./hooks/useFormLogic.jsx";
@@ -39,7 +39,7 @@ export const Form = ({
               </Grid>
             ))}
           </Grid>
-          <OperationButton type="submit" text={textButton} />
+          <CustomButton type="submit" text={textButton} />
         </form>
       </Container>
     </Paper>
